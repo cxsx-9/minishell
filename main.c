@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:22:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/04/06 15:55:36 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/04/14 22:24:38 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,16 @@
 
 void	handler(int sig)
 {
-	
+	if (sig == SIGINT)
+	{
+		// printf("Good\n");
+		printf("\n");
+		rl_on_new_line(); // move readline to a new line
+		rl_replace_line("", 0); // clear the current input
+    	rl_redisplay(); // redisplay the prompt
+	}
+	else if (sig == SIGTSTP || sig == SIGQUIT)
+		return;
 }
 
 void	setup_signal(void)
@@ -41,6 +50,7 @@ void	setup_signal(void)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGTSTP, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
+
 	/* signal interupt ctrl-c */
 	// signal(SIGINT, SIG_IGN);
 	/* signal terminal stop ctrl-z */
