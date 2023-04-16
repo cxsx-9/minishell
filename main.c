@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:22:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/04/14 22:24:38 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/04/16 12:28:09 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		// printf("Good\n");
 		printf("\n");
 		rl_on_new_line(); // move readline to a new line
 		rl_replace_line("", 0); // clear the current input
@@ -43,20 +42,22 @@ void	handler(int sig)
 
 void	setup_signal(void)
 {
-	struct sigaction sa;
-	sa.sa_handler = handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGTSTP, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	struct sigaction s_int;
+	struct sigaction s_quit;
+	struct sigaction s_tstp;
 
-	/* signal interupt ctrl-c */
-	// signal(SIGINT, SIG_IGN);
-	/* signal terminal stop ctrl-z */
-	// signal(SIGTSTP, SIG_IGN);
-	/* signal quit ctrl-\ */
-	// signal(SIGQUIT, SIG_IGN);
+	s_int.sa_handler = handler;
+	sigemptyset(&s_int.sa_mask);
+	s_int.sa_flags = 0;
+	s_quit.sa_handler = SIG_IGN;
+	sigemptyset(&s_quit.sa_mask);
+	s_quit.sa_flags = 0;
+	s_tstp.sa_handler = SIG_IGN;
+	sigemptyset(&s_tstp.sa_mask);
+	s_tstp.sa_flags = 0;
+	sigaction(SIGINT, &s_int, NULL);
+	sigaction(SIGTSTP, &s_quit, NULL);
+	sigaction(SIGQUIT, &s_tstp, NULL);
 }
 
 int	main(void)
