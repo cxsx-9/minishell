@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:22:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/22 18:18:32 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/26 12:14:40 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ void	handler(int sig)
 	if (sig == SIGINT)
 	{
 		printf("\n");
-		rl_on_new_line(); // move readline to a new line
-		rl_replace_line("", 0); // clear the current input
-    	rl_redisplay(); // redisplay the prompt
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 	else if (sig == SIGTSTP || sig == SIGQUIT)
-		return;
+		return ;
 }
 
 void	setup_signal(void)
 {
-	struct sigaction s_int;
-	struct sigaction s_quit;
-	struct sigaction s_tstp;
+	struct sigaction	s_int;
+	struct sigaction	s_quit;
+	struct sigaction	s_tstp;
 
 	s_int.sa_handler = handler;
 	sigemptyset(&s_int.sa_mask);
@@ -45,48 +45,77 @@ void	setup_signal(void)
 	sigaction(SIGQUIT, &s_tstp, NULL);
 }
 
-// char *ft_strtok(char *str, char *delim)
-// {
-
-// }
-
-// void	lexer(char *input)
-// {
-// 	char	*token;
-// 	token = ft_strtok(input, " ");
-// }
-
-void	test_ls()
+/*
+void	init_list(t_list *node)
 {
-	const char* d_path;
-	DIR* directory;
-	struct dirent* entry;
-
-	d_path = ".";
-	directory = opendir(d_path);
-	if (directory == NULL)
-	{
-		perror("Error opening directory");
-		return ;
-	}
-	while ((entry = readdir(directory)) != NULL)
-	{
-		printf("%s\n", entry->d_name);
-	}
-	closedir(directory);
+	node = (t_list*)malloc(sizeof(node));
+	node->next = NULL;
+	ndoe->prev = NULL;
 }
 
-void	test_read(char *input)
+t_list	*lexer(char *input)
 {
-	int len;
 
-	len = ft_strlen(input);
-	if (ft_strncmp(input, "ls", len) == 0)
+	t_list	*new_node;
+	t_list	*tail;
+	t_list	*head;
+	char	**data_string;
+	int		count;
+	
+	//simple split into linked-list
+	count = 0;
+	data_string = ft_split(input, " ");
+	
+	while (data_string[count] != NULL)
 	{
-		printf("it is 'ls'\n");
-		test_ls();
+		new_node = malloc(sizeof(t_list));
+		new_node->type = NULL;
+		new_node->content = ft_strdup(data_string[count]);
+		new_node->next = NULL;
+		if (new_node->head == NULL)
+		{
+			head = new_node;
+			tail = new_node;
+		}
+		else
+		{
+			tail->next = new_node;
+			tail = new_node;
+		}
+		count++;
+	}
+	free(data_string);
+	return head;
+}
+
+void show_data(t_list* head) {
+    t_list* current = head;
+    int count;
+
+	count = 1;
+
+    while (current != NULL) {
+        printf("Token %d: Type: %s, Content: %s\n", count, current->type, current->content);
+        current = current->next;
+        count++;
+    }
+}
+
+void	free_token(t_list *head)
+{
+	t_list* current;
+
+	current = head;
+	while(current != NULL)
+	{
+		t_list* tmp;
+		tmp = current;
+		current = current->next;
+		free(tmp->content);
+		free(tmp);
 	}
 }
+*/
 
 int	main(void)
 {
@@ -107,8 +136,9 @@ int	main(void)
 		else if (buf[0] != '\0')
 		{
 			add_history(buf);
-			test_read(buf);
+			lexer(buf);
 		}
 	}
+	rl_clear_history();
 	free(buf);
 }

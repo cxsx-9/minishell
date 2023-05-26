@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/22 18:14:13 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:08:22 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,31 @@
 
 typedef	enum
 {
-	TOKEN_NONE,
-	TOKEN_WORD,
-	TOKEN_PIPE
+	UNTITLE,
+	WORD,
+	PIPE,
+	REDI,
+	SQOUTE,
+	DQOUTE,
+	BUILTIN
 }		tokentype;
+
+typedef struct s_dict
+{
+	char	*key;
+	char	*value;	
+}	t_dict;
 
 typedef struct s_token
 {
+	char		*token;
 	tokentype	type;
-	char		*value;
-}			t_token;
+}	t_token;
+
+/* LEXER */
+void	free_2d(char **input);
+void	show_2d(char **input);
+void	lexer(char *input);
+char	**smart_split(char const *s, char c);
 
 #endif
