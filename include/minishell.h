@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/26 13:08:22 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/27 12:26:29 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <readline/history.h>
 # include <dirent.h>
 # include <errno.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 # define KNRM  "\x1B[0m"
 # define KRED  "\x1B[31m"
@@ -35,7 +35,9 @@
 
 # define MAX_HISTORY 100
 
-typedef	enum
+extern char	**environ;
+
+typedef enum
 {
 	UNTITLE,
 	WORD,
@@ -59,9 +61,14 @@ typedef struct s_token
 }	t_token;
 
 /* LEXER */
+char	**lexer(char *input);
+char	**smart_split(char const *s, char c);
+
+/* EXECUTE */
+void	execute_from_path(char **args);
+
+/* UNTIL */
 void	free_2d(char **input);
 void	show_2d(char **input);
-void	lexer(char *input);
-char	**smart_split(char const *s, char c);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/16 18:49:59 by csantivi          #+#    #+#              #
-#    Updated: 2022/03/11 13:49:16 by csantivi         ###   ########.fr        #
+#    Updated: 2023/05/26 16:27:56 by csantivi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS = ft_isalpha.c \
 	ft_toupper.c \
 	ft_tolower.c \
 	ft_strchr.c \
+	ft_strcmp.c \
 	ft_strrchr.c \
 	ft_strncmp.c \
 	ft_memchr.c \

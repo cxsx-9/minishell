@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:52:17 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/25 23:55:25 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:26:59 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t destsize);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_strchr(const char *str, int c);
+int		ft_strcmp(const char *str1, const char *str2);
 char	*ft_strrchr(const char *str, int c);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);

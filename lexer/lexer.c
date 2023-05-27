@@ -6,52 +6,61 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/26 13:49:53 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/27 12:24:03 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-void	free_2d(char **input)
+void	token_analyze(char *token)
 {
-	int	i;
+	int	d;
 
-	i = 0;
-	while (input[i])
-		free(input[i++]);
-	free(input);
+	d = ft_strcmp(token, "test");
+	printf("%s - test = %d\n", token, d);
 }
 
-void	show_2d(char **input)
+void	create_llst_from2d(char **str)
 {
-	int	i;
-
-	i = 0;
-	while (input[i])
-		printf("%s-", input[i++]);
-	printf("\n");
-}
-
-void    scaning(char *str)
-{
-    int i;
-    
-    i = -1;
-    while (str[++i])
-        str[i] = ft_toupper(str[i]);
-}
-
-void	lexer(char *input)
-{
-	char	**datastring;
+	
+	t_token	new;
 	int		i;
 
 	i = 0;
-    scaning(input);
-	datastring = smart_split(input, ' ');
-    if (datastring)
-    {
-	    show_2d(datastring);
-	    free_2d(datastring);
-    }
+	while (str[i])
+	{
+		token_analyze(str[i]);
+		// ft_lstnew((void *)new.token)
+		i++;
+	}
+}
+
+int	check_special(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\\' || str[i] == ';')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	**lexer(char *input)
+{
+	char	**data;
+	t_list	head;
+
+	if (check_special(input))
+		return (NULL);
+	data = smart_split(input, ' ');
+	if (!data)
+		return (NULL);
+	// create_llst_from2d(data);
+	// show_2d(data);
+	return (data);
+	// free_2d(data);
 }

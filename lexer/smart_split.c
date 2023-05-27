@@ -6,53 +6,53 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:46:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/26 13:16:54 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/27 12:29:32 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static int	count(char const *s, char c)
 {
 	int	n;
+	int	q;
 
 	n = 0;
+	q = 0;
 	while (*s)
 	{
 		while (*s == c)
 			s++;
 		if (*s != c && *s)
 			n++;
-		if (*s++ == 34)
-			while (*s != 34 && *s)
+		if (*s == 34 || *s == 39)
+		{
+			q = *s;
+			s++;
+			while (*s != q && *s)
 				s++;
-		else if (*s++ == 39)
-			while (*s != 39 && *s)
-				s++;
-		if (!*s)
-			return (0);
+			if (!*s)
+				return (0);
+		}
 		while (*s != c && *s)
 			s++;
 	}
 	return (n);
 }
 
-char	*putstr(char const *s, char c)
+static char	*putstr(char const *s, char c)
 {
 	int		i;
+	int		q;
 	char	*txt;
 
 	i = 0;
-	if (s[i] == 34 && s[i])
+	q = 0;
+	if ((s[i] == 34 || s[i] == 39) && s[i])
 	{
+		q = s[i];
 		i++;
-		while (s[i] != 34)
-			i++;
-	}
-	else if (s[i] == 39 && s[i])
-	{
-		i++;
-		while (s[i] != 39)
+		while (s[i] != q)
 			i++;
 	}
 	while (s[i] != c && s[i])
@@ -64,7 +64,7 @@ char	*putstr(char const *s, char c)
 	return (txt);
 }
 
-char	**ft_split2(char const *s, char c, int n, char **str)
+static char	**ft_split2(char const *s, char c, int n, char **str)
 {
 	int	i;
 

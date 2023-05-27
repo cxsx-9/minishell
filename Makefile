@@ -4,10 +4,13 @@ CFLAGS = -Wall -Werror -Wextra
 RM = rm -rf
 LDFLAGS = -L/opt/homebrew/opt/readline/lib
 CPPFLAGS = -I/opt/homebrew/opt/readline/include
+INCLUDE = include/
 LIBFT = libft/libft.a
-SRC = main.c \
+SRC = src/main.c \
 	lexer/lexer.c \
-	lexer/smart_split.c
+	lexer/smart_split.c \
+	exec/execute.c \
+	util/free.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -17,7 +20,7 @@ $(NAME): $(LIBFT) $(OBJ)
 	$(CC) -lreadline $(LDFLAGS) $(OBJ) -o $(NAME) -Llibft -lft
 
 %.o: %.c
-	$(CC) $(CPPFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) -I $(INCLUDE) -c $< -o $@
 
 $(LIBFT):
 	make -C libft

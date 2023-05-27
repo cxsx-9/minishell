@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:22:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/26 12:14:40 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/27 12:17:27 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,82 +45,11 @@ void	setup_signal(void)
 	sigaction(SIGQUIT, &s_tstp, NULL);
 }
 
-/*
-void	init_list(t_list *node)
-{
-	node = (t_list*)malloc(sizeof(node));
-	node->next = NULL;
-	ndoe->prev = NULL;
-}
-
-t_list	*lexer(char *input)
-{
-
-	t_list	*new_node;
-	t_list	*tail;
-	t_list	*head;
-	char	**data_string;
-	int		count;
-	
-	//simple split into linked-list
-	count = 0;
-	data_string = ft_split(input, " ");
-	
-	while (data_string[count] != NULL)
-	{
-		new_node = malloc(sizeof(t_list));
-		new_node->type = NULL;
-		new_node->content = ft_strdup(data_string[count]);
-		new_node->next = NULL;
-		if (new_node->head == NULL)
-		{
-			head = new_node;
-			tail = new_node;
-		}
-		else
-		{
-			tail->next = new_node;
-			tail = new_node;
-		}
-		count++;
-	}
-	free(data_string);
-	return head;
-}
-
-void show_data(t_list* head) {
-    t_list* current = head;
-    int count;
-
-	count = 1;
-
-    while (current != NULL) {
-        printf("Token %d: Type: %s, Content: %s\n", count, current->type, current->content);
-        current = current->next;
-        count++;
-    }
-}
-
-void	free_token(t_list *head)
-{
-	t_list* current;
-
-	current = head;
-	while(current != NULL)
-	{
-		t_list* tmp;
-		tmp = current;
-		current = current->next;
-		free(tmp->content);
-		free(tmp);
-	}
-}
-*/
-
 int	main(void)
 {
-	char		*buf;
-	int			run;
+	char	*buf;
+	char	**data;
+	int		run;
 
 	setup_signal();
 	printf("%s>> Start ENGINE!\n%s", KRED, NONE);
@@ -133,10 +62,12 @@ int	main(void)
 			printf("%s>> EOF ;-;\n%s", KRED, NONE);
 			run = 0;
 		}
-		else if (buf[0] != '\0')
+		else if (ft_strlen(buf) != '\0')
 		{
 			add_history(buf);
-			lexer(buf);
+			data = lexer(buf);
+			execute_from_path(data);
+			free_2d(data);
 		}
 	}
 	rl_clear_history();
