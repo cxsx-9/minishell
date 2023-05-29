@@ -6,61 +6,76 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/27 12:24:03 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:54:15 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	token_analyze(char *token)
-{
-	int	d;
-
-	d = ft_strcmp(token, "test");
-	printf("%s - test = %d\n", token, d);
-}
-
-void	create_llst_from2d(char **str)
-{
-	
-	t_token	new;
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		token_analyze(str[i]);
-		// ft_lstnew((void *)new.token)
-		i++;
-	}
-}
-
 int	check_special(char *str)
 {
-	int	i;
+	char	*sub;
+	int		i;
+	int		q;
 
 	i = 0;
+	q = 0;
 	while (str[i])
 	{
+		if (str[i] == '\'' || str[i] == '\"') // find unclose quote
+		{
+			q = str[i];
+			i++;
+			while (str[i] && str[i] != q)
+				i++;
+			if (!str[i])
+				return (0);
+		}
+		// if (q)
 		if (str[i] == '\\' || str[i] == ';')
-			return (1);
+			return (0);
 		i++;
 	}
+	return (1);
+}
+
+int	is_white_space(char c)
+{
+	if (c == '\t' || c == '\n' || c == '\v' || \
+	c == '\f' || c == '\r' || c == ' ')
+		return (1);
 	return (0);
 }
 
-char	**lexer(char *input)
+void	clear_qoute_replace(char **data, t_list *my_env)
 {
-	char	**data;
-	t_list	head;
+	int	i;
+	int	j;
+	int	q;
 
-	if (check_special(input))
-		return (NULL);
-	data = smart_split(input, ' ');
-	if (!data)
-		return (NULL);
-	// create_llst_from2d(data);
-	// show_2d(data);
-	return (data);
-	// free_2d(data);
+	i = 0;
+	q = 0;
+	while (*data)
+	{
+		if (*data[0] == 39)
+			*data = ft_strtrim(*data, "\'");
+		else
+		{
+			if (*data[0] == 34)
+				*data = ft_strtrim(*data, "\"");
+			// find_and_replace(data[i], my_env);
+		}
+		data++;
+	}
+}
+
+void	lexer(t_d *d)
+{
+	d->data = NULL;
+	if (!check_special(d->buf))
+		return ;
+	d->data = smart_split(d->buf, ' ');
+	if (!d->data)
+		return ;
+	clear_qoute_replace(d->data, d->env);
 }

@@ -7,6 +7,7 @@ CPPFLAGS = -I/opt/homebrew/opt/readline/include
 INCLUDE = include/
 LIBFT = libft/libft.a
 SRC = src/main.c \
+	src/env.c \
 	lexer/lexer.c \
 	lexer/smart_split.c \
 	exec/execute.c \

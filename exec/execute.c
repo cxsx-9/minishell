@@ -6,37 +6,38 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:30:08 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/27 12:17:17 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:55:02 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_from_path(char **args)
+void	execute_from_path(t_d *d)
 {
+	int		status;
 	int		pid;
 	int		i;
 	char	**path;
 
-	if (!args)
+	if (!d->data)
 		return ;
-	path = ft_split(getenv("PATH"), ':');
+	path = ft_split(ft_getenv(d->env, "PATH"), ':');
 	pid = fork();
 	i = 0;
 	if (pid == 0)
 	{
-		execve(args[0], args, environ);
+		execve(d->data[0], d->data, d->envp);
 		while (path[i])
 		{
 			path[i] = ft_strjoin(path[i], "/");
-			path[i] = ft_strjoin(path[i], args[0]);
-			execve(path[i], args, environ);
+			path[i] = ft_strjoin(path[i], d->data[0]);
+			execve(path[i], d->data, d->envp);
 			i++;
 		}
-		printf("bash : %s: comand not found\n", args[0]);
+		printf("bash : %s: comand not found\n", d->data[0]);
 		exit(127);
 	}
-	else
-		waitpid(pid, NULL, 0);
+	waitpid(pid, &status, 0);
+	d->exit_status = WEXITSTATUS(status);
 	free_2d(path);
 }

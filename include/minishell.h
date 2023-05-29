@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/27 12:26:29 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:55:15 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <dirent.h>
 # include <errno.h>
 # include "../libft/libft.h"
+# include <termios.h>
+# include <curses.h>
+# include <term.h>
 
 # define KNRM  "\x1B[0m"
 # define KRED  "\x1B[31m"
@@ -35,40 +38,36 @@
 
 # define MAX_HISTORY 100
 
-extern char	**environ;
+typedef struct s_d
+{ 
+	int     exit_status;
+    char    *buf;
+    char    **data;
+    char    **envp;
+	t_list	*env;
+}			t_d;
 
-typedef enum
-{
-	UNTITLE,
-	WORD,
-	PIPE,
-	REDI,
-	SQOUTE,
-	DQOUTE,
-	BUILTIN
-}		tokentype;
-
-typedef struct s_dict
+typedef struct s_env
 {
 	char	*key;
 	char	*value;	
-}	t_dict;
-
-typedef struct s_token
-{
-	char		*token;
-	tokentype	type;
-}	t_token;
+}			t_env;
 
 /* LEXER */
-char	**lexer(char *input);
+void    lexer(t_d *d);
 char	**smart_split(char const *s, char c);
 
 /* EXECUTE */
-void	execute_from_path(char **args);
+void	execute_from_path(t_d *d);
 
 /* UNTIL */
 void	free_2d(char **input);
 void	show_2d(char **input);
+void	free_env(void *content);
+
+/* ENV */
+t_list	*init_env(char **envp);
+void	print_env(void *content);
+char	*ft_getenv(t_list *my_env, char *str);
 
 #endif
