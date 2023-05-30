@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/29 15:54:15 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:14:42 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	check_special(char *str)
 {
-	char	*sub;
 	int		i;
 	int		q;
 
@@ -31,7 +30,6 @@ int	check_special(char *str)
 			if (!str[i])
 				return (0);
 		}
-		// if (q)
 		if (str[i] == '\\' || str[i] == ';')
 			return (0);
 		i++;
@@ -47,7 +45,26 @@ int	is_white_space(char c)
 	return (0);
 }
 
-void	clear_qoute_replace(char **data, t_list *my_env)
+void	remove_quote(char *str, char q)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] != q)
+		{
+			str[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	str[j] = '\0';
+}
+
+void	clear_quote_replace(char **data, t_list *my_env)
 {
 	int	i;
 	int	j;
@@ -58,12 +75,12 @@ void	clear_qoute_replace(char **data, t_list *my_env)
 	while (*data)
 	{
 		if (*data[0] == 39)
-			*data = ft_strtrim(*data, "\'");
+			remove_quote(*data, 39);
 		else
 		{
 			if (*data[0] == 34)
-				*data = ft_strtrim(*data, "\"");
-			// find_and_replace(data[i], my_env);
+				remove_quote(*data, 34);
+			// replace $
 		}
 		data++;
 	}
@@ -75,7 +92,8 @@ void	lexer(t_d *d)
 	if (!check_special(d->buf))
 		return ;
 	d->data = smart_split(d->buf, ' ');
+	show_2d(d->data);
 	if (!d->data)
 		return ;
-	clear_qoute_replace(d->data, d->env);
+	clear_quote_replace(d->data, d->env);
 }

@@ -6,36 +6,36 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:46:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/29 15:54:37 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:04:12 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	count(char const *s, char c)
+static int	count(char const *s, char c, int i)
 {
 	int	n;
 	int	q;
 
 	n = 0;
 	q = 0;
-	while (*s)
+	while (s[i])
 	{
-		while (*s == c)
-			s++;
-		if (*s != c && *s)
+		while (s[i] == c)
+			i++;
+		if (s[i] != c && s[i])
 			n++;
-		if (*s == 34 || *s == 39)
+		if (s[i] == 34 || s[i] == 39)
 		{
-			q = *s;
-			s++;
-			while (*s != q && *s)
-				s++;
-			if (!*s)
+			q = s[i];
+			i++;
+			while (s[i] != q && s[i])
+				i++;
+			if (!s[i])
 				return (0);
 		}
-		while (*s != c && *s)
-			s++;
+		while (s[i] != c && s[i])
+			i++;
 	}
 	return (n);
 }
@@ -95,7 +95,7 @@ char	**smart_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	n = count(s, c);
+	n = count(s, c, 0);
 	if (n == 0)
 		return (NULL);
 	str = (char **)malloc(sizeof(char *) * (n + 1));
