@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 12:23:11 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/28 00:24:11 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/01 01:32:30 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,19 @@ void	free_env(void *content)
 {
 	t_env	*env;
 
-	env = (t_env*) content;
+	env = (t_env *) content;
 	free(env->key);
 	free(env->value);
 	free(env);
+}
+
+void	free_tkn(void *content)
+{
+	t_token	*token;
+
+	token = (t_token *) content;
+	free(token->str);
+	free(token);
 }
 
 void	show_2d(char **input)

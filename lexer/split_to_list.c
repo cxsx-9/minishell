@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   smart_split.c                                      :+:      :+:    :+:   */
+/*   split_to_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:46:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/31 17:12:19 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/01 00:55:14 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count(char *str)
+static int	count(char *str)
 {
 	int		n;
 	char	c;
@@ -38,7 +38,7 @@ int	count(char *str)
 	return (n);
 }
 
-char	*ft_strndup(char *str, int n)
+static char	*ft_strndup(char *str, int n)
 {
 	int		i;
 	char	*ret;
@@ -56,7 +56,7 @@ char	*ft_strndup(char *str, int n)
 	return (ret);
 }
 
-char	*makestr(char *str, int *k)
+static char	*makestr(char *str, int *k)
 {
 	char	c;
 	int		i;
@@ -103,18 +103,31 @@ static char	**ft_split2(char *s, int n, char **str)
 	return (str);
 }
 
-char	**smart_split(char *s)
+void	split_to_list(t_d *d)
 {
+	t_token	*new_tkn;
 	int		n;
+	int		i;
 	char	**str;
 
-	if (!s)
-		return (NULL);
-	n = count(s);
+	i = 0;
+	if (!d->buf)
+		return ;
+	n = count(d->buf);
 	if (n == 0)
-		return (NULL);
+		return ;
 	str = (char **)malloc(sizeof(char *) * (n + 1));
 	if (!str)
-		return (NULL);
-	return (ft_split2(s, n, str));
+		return ;
+	str = ft_split2(d->buf, n, str);
+	d->tkn = NULL;
+	while (str[i])
+	{
+		new_tkn = malloc(sizeof(t_token));
+		new_tkn->str = ft_strndup(str[i], ft_strlen(str[i]));
+		new_tkn->type = Idk;
+		ft_lstadd_back(&d->tkn, ft_lstnew((void *) new_tkn));
+		i++;
+	}
+	free_2d(str);
 }

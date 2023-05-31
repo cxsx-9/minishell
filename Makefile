@@ -1,15 +1,17 @@
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 RM = rm -rf
 LDFLAGS = -L/opt/homebrew/opt/readline/lib
-CPPFLAGS = -I/opt/homebrew/opt/readline/include
+CFLAGS += -I/opt/homebrew/opt/readline/include
 INCLUDE = include/
 LIBFT = libft/libft.a
 SRC = src/main.c \
 	src/env.c \
 	lexer/lexer.c \
 	lexer/smart_split.c \
+	lexer/split_to_list.c \
+	lexer/split_metachar.c \
 	exec/execute.c \
 	util/free.c
 
@@ -18,10 +20,10 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) -lreadline $(LDFLAGS) $(OBJ) -o $(NAME) -Llibft -lft
+	$(CC) $(CFLAGS) -lreadline $(LDFLAGS) $(OBJ) -o $(NAME) -Llibft -lft
 
 %.o: %.c
-	$(CC) $(CPPFLAGS) -I $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $@
 
 $(LIBFT):
 	make -C libft

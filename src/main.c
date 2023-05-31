@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:22:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/30 18:12:13 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/05/31 21:55:29 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,34 +57,29 @@ void	setup_signal(void)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_d		*d;
-	int		program;
-	int		run;
+	t_d		d;
 
 	ac = (int) ac;
 	av = (char **) av;
-	d->envp = envp;
-	d->env= init_env(envp);
+	init_env(&d, envp);
 	setup_signal();
 	printf("%s>> Start ENGINE!\n%s", KRED, NONE);
-	run = 1;
-	while (run)
+	while (1)
 	{
-		d->buf = readline(KGRN "csantivi \% " NONE);
-		if (!d->buf)
+		d.buf = readline(KGRN "csantivi \% " NONE);
+		if (!d.buf)
+			break ;
+		else if (ft_strlen(d.buf))
 		{
-			printf("%s>> EOF ;-;\n%s", KRED, NONE);
-			run = 0;
-		}
-		else if (ft_strlen(d->buf))
-		{
-			add_history(d->buf);
-			lexer(d);
-			execute_from_path(d);
-			free_2d(d->data);
+			add_history(d.buf);
+			lexer(&d);
+			execute_from_path(&d, 0, 0);
+			free_2d(d.data);
 		}
 	}
-	ft_lstclear(&d->env, free_env);
+	printf("%s>> EOF ;-;\n%s", KRED, NONE);
+	ft_lstclear(&d.env, free_env);
+	ft_lstclear(&d.tkn, free_tkn);
 	rl_clear_history();
-	free(d->buf);
+	free(d.buf);
 }

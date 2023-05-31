@@ -6,17 +6,15 @@
 /*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:30:08 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/29 15:55:02 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/01 01:31:35 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_from_path(t_d *d)
+void	execute_from_path(t_d *d, int i, int status)
 {
-	int		status;
 	int		pid;
-	int		i;
 	char	**path;
 
 	if (!d->data)
