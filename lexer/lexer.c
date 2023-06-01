@@ -85,6 +85,7 @@ void	lexer(t_d *d)
 	d->data = smart_split(d->buf);
 	split_to_list(d);
 	ft_lstiter(d->tkn, print_tkn); // <---- print all in 't_list tkn (token)'
+	printf("\n");
 	// split_metachar(d); 
 	// show_2d(d->data); // <---- uncomment for show
 	d->data = NULL; // <--- comment for use after lexer
