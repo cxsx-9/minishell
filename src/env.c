@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 23:35:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 01:32:55 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:40:03 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,9 @@ void	print_env(void *content)
 	printf("%s=%s\n", env->key, env->value);
 }
 
-void	print_tkn(void *content)
+void	print_tkn(char *str)
 {
-	t_token	*token;
-
-	token = (t_token *)content;
-	printf("%s -> ", token->str);
+	printf("%s -> ", str);
 }
 
 void	init_env(t_d *d, char **envp)
@@ -51,7 +48,6 @@ void	init_env(t_d *d, char **envp)
 	i = 0;
 	d->envp = envp;
 	d->env = NULL;
-	d->tkn = NULL;
 	while (envp[i])
 	{
 		key_n_value = ft_split(envp[i], '=');

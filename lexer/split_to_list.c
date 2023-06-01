@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_to_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:46:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 00:55:14 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:42:45 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ void	split_to_list(t_d *d)
 		new_tkn = malloc(sizeof(t_token));
 		new_tkn->str = ft_strndup(str[i], ft_strlen(str[i]));
 		new_tkn->type = Idk;
-		ft_lstadd_back(&d->tkn, ft_lstnew((void *) new_tkn));
+		new_tkn->next = NULL;
+		lst_addback(&d->tkn, new_tkn);
 		i++;
 	}
 	free_2d(str);

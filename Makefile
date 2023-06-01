@@ -13,7 +13,9 @@ SRC = src/main.c \
 	lexer/split_to_list.c \
 	lexer/split_metachar.c \
 	exec/execute.c \
-	util/free.c
+	util/free.c \
+	util/lst_1.c \
+	util/lst_2.c
 
 OBJ = $(SRC:.c=.o)
 

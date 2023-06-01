@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 01:36:51 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:10:26 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,33 @@ void	clear_quote_replace(char **data, t_list *my_env)
 	}
 }
 
+void	test_insert(t_d *d)
+{
+	t_token	*new;
+
+	new = malloc(sizeof(t_token));
+	new->str = (char *)malloc(sizeof(char) * 4);
+	ft_strlcpy(new->str, "new", 4);
+	new->type = Idk;
+	new->next = NULL;
+	// lst_addfront(&d->tkn, new);
+	
+	lst_insert(&d->tkn, new, 1);
+	lst_iter(d->tkn, print_tkn); // <---- print all in 't_list tkn (token)'
+	printf("size[%d]", lst_size(d->tkn));
+	printf("\n");
+}
+
 void	lexer(t_d *d)
 {
 	d->data = NULL;
+	d->tkn = NULL;
 	if (!check_special(d->buf))
 		return ;
 	d->data = smart_split(d->buf);
 	split_to_list(d);
-	ft_lstiter(d->tkn, print_tkn); // <---- print all in 't_list tkn (token)'
-	printf("\n");
-	// split_metachar(d); 
+	// test_insert(d);
+	split_metachar(d);
 	// show_2d(d->data); // <---- uncomment for show
 	d->data = NULL; // <--- comment for use after lexer
 	if (!d->data)

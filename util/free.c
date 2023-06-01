@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 12:23:11 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 01:32:30 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:44:34 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,6 @@ void	free_env(void *content)
 	free(env->key);
 	free(env->value);
 	free(env);
-}
-
-void	free_tkn(void *content)
-{
-	t_token	*token;
-
-	token = (t_token *) content;
-	free(token->str);
-	free(token);
 }
 
 void	show_2d(char **input)

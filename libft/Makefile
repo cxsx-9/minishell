@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+         #
+#    By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/16 18:49:59 by csantivi          #+#    #+#              #
-#    Updated: 2023/06/01 00:17:09 by csantivi         ###   ########.fr        #
+#    Updated: 2023/06/01 17:22:37 by csantivi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 CC = gcc
 AR = ar -crs
 RM = rm -rf
@@ -60,8 +60,7 @@ SRCS = ft_isalpha.c \
 	ft_lstiter.c \
 	ft_lstmap.c \
 	ft_itoa_base.c \
-	ft_itoa_u.c \
-	ft_lstinsert.c
+	ft_itoa_u.c
 
 OBJS = $(SRCS:.c=.o)
 

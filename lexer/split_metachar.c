@@ -12,7 +12,23 @@
 
 #include "minishell.h"
 
+// int	is_meta(char c)
+// {
+// 	if (c == '|' || c == '<' || \
+// 		c == '<<' || c == '>>' || c == '>')
+// 		return (1);
+// 	return (0);
+// }
+
 // void	split_metachar(t_d *d)
 // {
-	
+// 	t_token	*new;
+// 	int		sep;
+// 	int		size;
+// 	int	i;
+// 	int	j;
+
+// 	new = d->tkn;
+// 	sep = 0;
+// 	size = ft_lstsize(d->tkn);
 // }
