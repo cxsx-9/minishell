@@ -2,8 +2,8 @@ NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 RM = rm -rf
-LDFLAGS = -L/opt/homebrew/opt/readline/lib
-CFLAGS += -I/opt/homebrew/opt/readline/include
+LDFLAGS = -L/usr/local/opt/readline/lib
+CFLAGS += -I/usr/local/opt/readline/include
 INCLUDE = include/
 LIBFT = libft/libft.a
 SRC = src/main.c \
