@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/02 15:32:04 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/02 20:20:38 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ typedef struct	s_token
 	struct s_token	*next;
 }			t_token;
 
+typedef struct	s_cmd
+{
+	char**	cmd;
+}			t_cmd;
+
 typedef struct s_env
 {
 	char	*key;
@@ -79,6 +84,7 @@ char	*ft_strndup(char *str, int n);
 void	split_to_list(t_d *d);
 char	**smart_split(char *s);
 void	split_metachar(t_d *d);
+void	join_cmd(t_d *d);
 
 // EXECUTE 
 void	execute_from_path(t_d *d, int i, int status);

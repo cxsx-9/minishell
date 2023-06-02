@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:46:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/02 11:55:10 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/02 21:40:11 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,21 @@ static int	count(char *str)
 	{
 		while (*str && *str == ' ')
 			str++;
-		if (!*str)
-			break ;
-		while (*str && (*str == '\'' || *str == '\"'))
+		if (*str && *str != ' ')
+			n++;
+		while (*str && *str != ' ')
 		{
-			c = *str++;
-			while (*str && c != *str)
+			while (*str && (*str == '\'' || *str == '\"'))
+			{
+				c = *str++;
+				while (*str && c != *str)
+					str++;
 				str++;
+			}
+			if (!*str || *str == ' ')
+				break ;
 			str++;
 		}
-		n++;
-		while (*str && *str != ' ' && !(*str == '\'' || *str == '\"'))
-			str++;
 	}
 	return (n);
 }
@@ -64,20 +67,18 @@ static char	*makestr(char *str, int *k)
 
 	tmp = str;
 	i = 0;
-	while (*str && (*str == '\'' || *str == '\"'))
+	while (str[i] && str[i] != ' ')
 	{
-		c = *str++;
-		while (*str && c != *str)
+		while (str[i] && (str[i] == '\'' || str[i] == '\"'))
 		{
-			str++;
+			c = str[i];
+			i++;
+			while (str[i] && c != str[i])
+				i++;
 			i++;
 		}
-		str++;
-		i += 2;
-	}
-	while (*str && *str != ' ' && !(*str == '\'' || *str == '\"'))
-	{
-		str++;
+		if (!str[i] || str[i] == ' ')
+			break ;
 		i++;
 	}
 	*k = i;

@@ -12,6 +12,7 @@ SRC = src/main.c \
 	lexer/smart_split.c \
 	lexer/split_to_list.c \
 	lexer/split_metachar.c \
+	lexer/join_cmd.c \
 	exec/execute.c \
 	util/free.c \
 	util/lst_1.c \

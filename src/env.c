@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 23:35:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 17:40:03 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/02 21:37:56 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_env(void *content)
 
 void	print_tkn(char *str)
 {
-	printf("%s -> ", str);
+	printf("[ %s ]->", str);
 }
 
 void	init_env(t_d *d, char **envp)

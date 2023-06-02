@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/02 15:34:43 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/02 21:35:00 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	test_insert(t_d *d)
 	new2->type = Idk;
 	new->next = NULL;
 	new2->next = NULL;
-	// lst_addfront(&d->tkn, new);
 	
 	lst_insert(&d->tkn, new, 1);
 	lst_insert(&d->tkn, new2, 1 + 1);
@@ -107,10 +106,11 @@ void	lexer(t_d *d)
 	d->tkn = NULL;
 	if (check_special(d->buf))
 		return ;
-	d->data = smart_split(d->buf);
+	// d->data = smart_split(d->buf); // comment
 	split_to_list(d);
 	// test_insert(d);
 	split_metachar(d);
+	// join_cmd(d);
 	// show_2d(d->data); // <---- uncomment for show
 	d->data = NULL; // <--- comment for use after lexer
 	if (!d->data)
