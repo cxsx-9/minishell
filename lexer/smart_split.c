@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   smart_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:46:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/05/31 17:12:19 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/02 11:55:25 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,6 @@ int	count(char *str)
 			str++;
 	}
 	return (n);
-}
-
-char	*ft_strndup(char *str, int n)
-{
-	int		i;
-	char	*ret;
-
-	i = 0;
-	ret = malloc(n + 1);
-	while (*str && n)
-	{
-		ret[i] = *str;
-		str++;
-		i++;
-		--n;
-	}
-	ret[i] = 0;
-	return (ret);
 }
 
 char	*makestr(char *str, int *k)

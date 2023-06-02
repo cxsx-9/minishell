@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 17:58:04 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:32:04 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,12 @@ typedef struct s_d
 
 // LEXER
 void	lexer(t_d *d);
+char	*ft_strndup(char *str, int n);
 
 // split by space and ignore in quote
 void	split_to_list(t_d *d);
 char	**smart_split(char *s);
+void	split_metachar(t_d *d);
 
 // EXECUTE 
 void	execute_from_path(t_d *d, int i, int status);
@@ -88,9 +90,9 @@ void	free_env(void *content);
 t_token	*lst_new(char *str, enum e_token type);
 t_token *lst_last(t_token *tkn);
 void	lst_addfront(t_token **tkn, t_token *new);
-void	lst_addback(t_token **tkn, t_token *new);
+void	lst_addback(t_token **tkn, t_token *new);//
 int		lst_size(t_token *tkn);
-void	lst_delone(t_token *tkn, void (*del)(char *));
+void	lst_delone(t_token *tkn);
 void	lst_clear(t_token **tkn);
 void	lst_iter(t_token *tkn, void (*f)(char *));
 void	lst_insert(t_token **lst, t_token *new, int pos);

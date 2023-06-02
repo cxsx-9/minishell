@@ -6,19 +6,17 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:11:41 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 18:09:53 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/02 13:10:20 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lst_delone(t_token *tkn, void (*del)(char *))
+void	lst_delone(t_token *tkn)
 {
-	if (!del)
-		return ;
 	if (tkn)
 	{
-		(*del)(tkn->str);
+		free(tkn->str);
 		free(tkn);
 	}
 }
@@ -34,8 +32,7 @@ void	lst_clear(t_token **tkn)
 		while (tkn && *tkn)
 		{
 			tmp = (*tkn)->next;
-			free((*tkn)->str);
-			free(*tkn);
+			lst_delone(*tkn);
 			*tkn = tmp;
 		}
 	}

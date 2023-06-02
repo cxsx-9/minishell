@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:46:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 17:42:45 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/02 11:55:10 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	count(char *str)
 	return (n);
 }
 
-static char	*ft_strndup(char *str, int n)
+char	*ft_strndup(char *str, int n)
 {
 	int		i;
 	char	*ret;
