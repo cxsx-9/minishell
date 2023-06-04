@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 18:47:30 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 20:32:33 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,4 +145,21 @@ char			*ft_getenv(t_list *my_env, char *str);
 
 	fot show:	show_cmd(head);
 	for free:	lst_clear(&head);
+*/
+
+/*
+	t_token	*tmp;
+	
+	printf("from split : ");	//  --|
+	lst_iter(d->tkn, print_tkn); //   |
+	printf("\n");				 // --|
+	printf("type       : ");		// ----
+	tmp = d->tkn;							//
+	while (tmp)								//
+	{										//
+		printf(" %d ->", tmp->type);		//
+		tmp = tmp->next;					//
+	}										//
+	printf("\n");					// ----
+
 */

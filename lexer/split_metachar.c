@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 22:39:54 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 18:46:23 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 20:33:18 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	case_cut_list(t_token **h, t_token *p, int i, int pos)
 void	define_type(t_token *ptr)
 {
 	t_token	*tmp;
-	
+
 	tmp = ptr;
 	while (tmp)
 	{

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:29:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 19:04:40 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 20:33:05 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ void	fill_cmd(t_token **head, t_token *runner, int size)
 		i++;
 	}
 	cmd_list->cmd[i] = 0;
-	// show_2d(cmd_list->cmd);
 	lst_addback(head, cmd_list);
-	printf("from fill : ");
-	show_cmd(*head);
 }
 
 void	join_cmd(t_d *d)
@@ -62,6 +59,4 @@ void	join_cmd(t_d *d)
 	check_point = d->tkn;
 	d->tkn = head;
 	lst_clear(&check_point);
-	printf("from join : ");
-	show_cmd(d->tkn);
 }
