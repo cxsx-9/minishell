@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 00:19:03 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 18:11:48 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 00:44:52 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	skip_quote(char *s, int i)
 	while (s[i] && s[i] != q)
 		i++;
 	if (!s[i])
-		return (-1);
+		i--;
 	i++;
 	return (i - start);
 }

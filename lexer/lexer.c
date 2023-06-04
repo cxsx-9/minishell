@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 20:32:10 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 01:26:02 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 int	check_special(char *str)
 {
 	int		i;
-	int		q;
 
 	i = 0;
-	q = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')

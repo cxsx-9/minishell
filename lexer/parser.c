@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 22:28:25 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 11:46:55 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 01:23:56 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	*clear_quote_expand(char *str, t_d *d)
 	new = ft_calloc(1, sizeof(char));
 	while (str[i])
 	{
-		usleep (1000);
 		if (str[i] == '\'')
 			i += fill_squote(&new, str, i);
 		else if (str[i] == '\"')

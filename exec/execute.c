@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:30:08 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 01:31:35 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 01:28:01 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,12 @@ void	execute_from_path(t_d *d, int i, int status)
 	waitpid(pid, &status, 0);
 	d->exit_status = WEXITSTATUS(status);
 	free_2d(path);
+}
+
+void	main_execute(t_d *d)
+{
+	t_token	*tmp;
+
+	tmp = d->tkn;
+	printf("execute\n");
 }

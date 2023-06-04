@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 20:32:33 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 01:25:31 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,10 @@ int				fill_in_dq(char **new, char *s, int i);
 // join_cmd.c
 void			join_cmd(t_d *d);
 
-// EXECUTE 
+// EXECUTE
+// execute.c
 void			execute_from_path(t_d *d, int i, int status);
+void			main_execute(t_d *d);
 
 // UTIL
 // free.c
@@ -162,4 +164,14 @@ char			*ft_getenv(t_list *my_env, char *str);
 	}										//
 	printf("\n");					// ----
 
+	printf("from join  : ");	 //  --|
+	show_cmd(d->tkn); //   |
+	printf("type       : ");		// ----
+	tmp = d->tkn;							//
+	while (tmp)								//
+	{										//
+		printf(" %d ->", tmp->type);		//
+		tmp = tmp->next;					//
+	}										//
+	printf("\n\n");					// ----
 */
