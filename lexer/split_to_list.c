@@ -6,36 +6,32 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:46:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/02 21:40:11 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 11:53:24 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	count(char *str)
+int	count_word(char *str)
 {
+	int		i;
 	int		n;
-	char	c;
 
+	i = 0;
 	n = 0;
-	while (*str)
+	while (str[i])
 	{
-		while (*str && *str == ' ')
-			str++;
-		if (*str && *str != ' ')
+		while (str[i] && str[i] == ' ')
+			i++;
+		if (str[i] && str[i] != ' ')
 			n++;
-		while (*str && *str != ' ')
+		while (str[i] && str[i] != ' ')
 		{
-			while (*str && (*str == '\'' || *str == '\"'))
-			{
-				c = *str++;
-				while (*str && c != *str)
-					str++;
-				str++;
-			}
-			if (!*str || *str == ' ')
+			if (str[i] && (str[i] == '\'' || str[i] == '\"'))
+				i += skip_quote(str, i);
+			if (!str[i] || str[i] == ' ')
 				break ;
-			str++;
+			i++;
 		}
 	}
 	return (n);
@@ -59,9 +55,8 @@ char	*ft_strndup(char *str, int n)
 	return (ret);
 }
 
-static char	*makestr(char *str, int *k)
+char	*makestr(char *str, int *k)
 {
-	char	c;
 	int		i;
 	char	*tmp;
 
@@ -69,14 +64,8 @@ static char	*makestr(char *str, int *k)
 	i = 0;
 	while (str[i] && str[i] != ' ')
 	{
-		while (str[i] && (str[i] == '\'' || str[i] == '\"'))
-		{
-			c = str[i];
-			i++;
-			while (str[i] && c != str[i])
-				i++;
-			i++;
-		}
+		if (str[i] && (str[i] == '\'' || str[i] == '\"'))
+			i += skip_quote(str, i);
 		if (!str[i] || str[i] == ' ')
 			break ;
 		i++;
@@ -85,7 +74,7 @@ static char	*makestr(char *str, int *k)
 	return (ft_strndup(tmp, i));
 }
 
-static char	**ft_split2(char *s, int n, char **str)
+char	**fill_word(char *s, int n, char **str)
 {
 	int	i;
 	int	k;
@@ -104,23 +93,20 @@ static char	**ft_split2(char *s, int n, char **str)
 	return (str);
 }
 
-void	split_to_list(t_d *d)
+void	split_to_list(t_d *d, int i, int n)
 {
 	t_token	*new_tkn;
-	int		n;
-	int		i;
 	char	**str;
 
-	i = 0;
 	if (!d->buf)
 		return ;
-	n = count(d->buf);
+	n = count_word(d->buf);
 	if (n == 0)
 		return ;
 	str = (char **)malloc(sizeof(char *) * (n + 1));
 	if (!str)
 		return ;
-	str = ft_split2(d->buf, n, str);
+	str = fill_word(d->buf, n, str);
 	d->tkn = NULL;
 	while (str[i])
 	{

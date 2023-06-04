@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 22:39:54 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/02 21:42:32 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/03 01:24:08 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_meta(char c)
 	return (0);
 }
 
-void	case_cut_list(t_token **h, t_token *p, int i, int pos)
+int	case_cut_list(t_token **h, t_token *p, int i, int pos)
 {
 	int				size;
 	int				redi;
@@ -54,36 +54,33 @@ void	case_cut_list(t_token **h, t_token *p, int i, int pos)
 	lst_insert(h, last, pos + 1);
 	last->next = p->next;
 	lst_delone(p);
+	return (0);
 }
 
-void	split_metachar(t_d *d)
+void	split_metachar(t_d *d, int pos, int size, int i)
 {
 	t_token	*ptr;
-	int		pos;
-	int		i;
 
-	pos = 0;
 	ptr = d->tkn;
 	while (ptr)
 	{
-		i = -1;
-		while (ptr->str[++i])
+		i = 0;
+		size = ft_strlen(ptr->str);
+		while (ptr->str[i])
 		{
-			if (is_meta(ptr->str[i]))
+			if (ptr->str[i] == '\'' || ptr->str[i] == '\"')
+				i += skip_quote(ptr->str, i);
+			else if (is_meta(ptr->str[i]) && !(size == 1
+					|| ((size == 2) && ptr->str[0] == ptr->str[1])))
 			{
-				if (!(ft_strlen(ptr->str) == 1 || ((ft_strlen(ptr->str) == 2)
-							&& ptr->str[0] == ptr->str[1])))
-				{
-					case_cut_list(&d->tkn, ptr, i, pos);
-					ptr = d->tkn;
-					pos = 0;
-					break ;
-				}
+				pos = case_cut_list(&d->tkn, ptr, i, pos);
+				ptr = d->tkn;
+				break ;
 			}
+			else
+				i++;
 		}
 		ptr = ptr->next;
 		pos++;
 	}
-	lst_iter(d->tkn, print_tkn);
-	printf("\n");
 }

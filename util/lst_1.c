@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:01:20 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 17:30:41 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 11:42:09 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ t_token	*lst_new(char *str, enum e_token type)
 	return (new);
 }
 
-t_token *lst_last(t_token *tkn)
+t_token	*lst_last(t_token *tkn)
 {
 	if (!tkn)
 		return (NULL);
 	while (tkn->next)
 		tkn = tkn->next;
-	return(tkn);
+	return (tkn);
 }
 
 void	lst_addfront(t_token **tkn, t_token *new)
@@ -69,5 +69,3 @@ int	lst_size(t_token *tkn)
 	}
 	return (i);
 }
-
-

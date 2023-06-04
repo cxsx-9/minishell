@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 23:35:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/02 21:37:56 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 01:11:02 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_getenv(t_list *my_env, char *str)
 	while (my_env)
 	{
 		env = my_env->content;
-		if (!ft_strcmp(env->key, str))
+		if (!ft_strncmp(env->key, str, ft_strlen(str)))
 			return (env->value);
 		my_env = my_env->next;
 	}
@@ -36,7 +36,7 @@ void	print_env(void *content)
 
 void	print_tkn(char *str)
 {
-	printf("[ %s ]->", str);
+	printf(" %s ->", str);
 }
 
 void	init_env(t_d *d, char **envp)

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/02 21:35:00 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 11:54:39 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	check_special(char *str)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
-			q = str[i];
-			i++;
-			while (str[i] && str[i] != q)
-				i++;
-			if (!str[i])
+			if (skip_quote(str, i) < 0)
 				return (1);
+			else
+				i += skip_quote(str, i);
+			if (!str[i])
+				break ;
 		}
 		if (str[i] == '\\' || str[i] == ';')
 			return (1);
@@ -37,83 +37,51 @@ int	check_special(char *str)
 	return (0);
 }
 
-void	remove_quote(char *str, char q)
+int	varlen(char *s, int i)
 {
-	int	i;
-	int	j;
+	int	len;
 
-	i = 0;
-	j = 0;
-	while (str[i])
+	len = 0;
+	while (s[i] && ft_isalnum(s[i]))
 	{
-		if (str[i] != q)
-		{
-			str[j] = str[i];
-			j++;
-		}
 		i++;
+		len++;
 	}
-	str[j] = '\0';
+	return (len);
 }
 
-void	clear_quote_replace(char **data, t_list *my_env)
+int	expand_var(char **new, char *s, int i, t_d *d)
 {
-	// int	i;
-	// int	j;
-	// int	q;
-	(void)my_env;
-	// i = 0;
-	// q = 0;
-	while (*data)
+	char	*var_name;
+	char	*value;
+	int		len;
+
+	while (s[i] == '\'' || s[i] == '\"' || s[i] == '$')
+		i++;
+	len = varlen(s, i);
+	if (!len)
+		value = "$\0";
+	else
 	{
-		if (*data[0] == 39)
-			remove_quote(*data, 39);
-		else
-		{
-			if (*data[0] == 34)
-				remove_quote(*data, 34);
-		}
-		data++;
+		var_name = ft_substr(s, i, len);
+		value = ft_getenv(d->env, var_name);
+		if (!value)
+			value = "\0";
+		free(var_name);
 	}
-}
-
-void	test_insert(t_d *d)
-{
-	t_token	*new;
-	t_token	*new2;
-
-	new = malloc(sizeof(t_token));
-	new2 = malloc(sizeof(t_token));
-	new->str = (char *)malloc(sizeof(char) * 4);
-	new2->str = (char *)malloc(sizeof(char) * 4);
-	ft_strlcpy(new->str, "aaa", 4);
-	ft_strlcpy(new2->str, "bbb", 4);
-	new->type = Idk;
-	new2->type = Idk;
-	new->next = NULL;
-	new2->next = NULL;
-	
-	lst_insert(&d->tkn, new, 1);
-	lst_insert(&d->tkn, new2, 1 + 1);
-	lst_iter(d->tkn, print_tkn); // <---- print all in 't_list tkn (token)'
-	printf("size[%d]", lst_size(d->tkn));
-	printf("\n");
+	*new = ft_strjoin_premium(*new, value, 1);
+	return (len + 1);
 }
 
 void	lexer(t_d *d)
 {
-	d->data = NULL;
 	d->tkn = NULL;
 	if (check_special(d->buf))
 		return ;
-	// d->data = smart_split(d->buf); // comment
-	split_to_list(d);
-	// test_insert(d);
-	split_metachar(d);
-	// join_cmd(d);
-	// show_2d(d->data); // <---- uncomment for show
-	d->data = NULL; // <--- comment for use after lexer
-	if (!d->data)
-		return ;
-	clear_quote_replace(d->data, d->env);
+	split_to_list(d, 0, 0);
+	split_metachar(d, 0, 0, 0);
+	parser(d);
+	/*join_cmd(d); << next part*/
+	lst_iter(d->tkn, print_tkn);
+	printf("\n");
 }

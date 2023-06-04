@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/02 20:20:38 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 11:52:16 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,21 @@
 
 enum e_token
 {
-	Str,
+	Idk,
 	Pipe,
-	Sqt,
-	Dqt,
-	Redi,
-	Idk
+	Redi
 };
 
-typedef struct	s_token
+typedef struct s_token
 {
-	char		*str;
+	char			*str;
 	enum e_token	type;
 	struct s_token	*next;
 }			t_token;
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
-	char**	cmd;
+	char	**scmd;
 }			t_cmd;
 
 typedef struct s_env
@@ -77,36 +74,65 @@ typedef struct s_d
 }			t_d;
 
 // LEXER
-void	lexer(t_d *d);
-char	*ft_strndup(char *str, int n);
 
-// split by space and ignore in quote
-void	split_to_list(t_d *d);
-char	**smart_split(char *s);
-void	split_metachar(t_d *d);
-void	join_cmd(t_d *d);
+// lexer.c
+void			lexer(t_d *d);
+int				expand_var(char **new, char *s, int i, t_d *d);
+int				varlen(char *s, int i);
+int				check_special(char *str);
+// smart_split.c
+char			**smart_split(char *s);
+// split_metachar.c
+enum e_token	check_type(char c);
+int				is_meta(char c);
+int				case_cut_list(t_token **h, t_token *p, int i, int pos);
+void			split_metachar(t_d *d, int pos, int size, int i);
+// split_to_list.c
+int				count_word(char *str);
+char			*ft_strndup(char *str, int n);
+char			*makestr(char *str, int *k);
+char			**fill_word(char *s, int n, char **str);
+void			split_to_list(t_d *d, int i, int n);
+// parser.c
+void			parser(t_d *d);
+char			*clear_quote_expand(char *str, t_d *d);
+// fill_in.c
+int				fill_squote(char **new, char *s, int i);
+int				fill_string(char **new, char *s, int i, t_d *d);
+int				fill_dquote(char **new, char *s, int i, t_d *d);
+int				fill_in_str(char **new, char *s, int i);
+int				fill_in_dq(char **new, char *s, int i);
+// join_cmd.c
+void			join_cmd(t_d *d);
 
 // EXECUTE 
-void	execute_from_path(t_d *d, int i, int status);
+void			execute_from_path(t_d *d, int i, int status);
 
-// UNTIL
-void	free_2d(char **input);
-void	show_2d(char **input);
-void	free_env(void *content);
-t_token	*lst_new(char *str, enum e_token type);
-t_token *lst_last(t_token *tkn);
-void	lst_addfront(t_token **tkn, t_token *new);
-void	lst_addback(t_token **tkn, t_token *new);//
-int		lst_size(t_token *tkn);
-void	lst_delone(t_token *tkn);
-void	lst_clear(t_token **tkn);
-void	lst_iter(t_token *tkn, void (*f)(char *));
-void	lst_insert(t_token **lst, t_token *new, int pos);
+// UTIL
+// free.c
+void			free_2d(char **input);
+void			free_env(void *content);
+void			show_2d(char **input);
+// lst_1.c
+t_token			*lst_new(char *str, enum e_token type);
+t_token			*lst_last(t_token *tkn);
+void			lst_addfront(t_token **tkn, t_token *new);
+void			lst_addback(t_token **tkn, t_token *new);//
+int				lst_size(t_token *tkn);
+// lst_2.c
+void			lst_delone(t_token *tkn);
+void			lst_clear(t_token **tkn);
+void			lst_iter(t_token *tkn, void (*f)(char *));
+void			lst_insert(t_token **lst, t_token *new, int pos);
+// util_1.c
+int				skip_quote(char *s, int i);
+char			*ft_strjoin_premium(char *s1, char *s2, int option);
 
-// ENV
-void	init_env(t_d *d, char **envp);
-void	print_env(void *content);
-void	print_tkn(char *str);
-char	*ft_getenv(t_list *my_env, char *str);
+// SRC/ENV
+// env.c
+void			init_env(t_d *d, char **envp);
+void			print_env(void *content);
+void			print_tkn(char *str);
+char			*ft_getenv(t_list *my_env, char *str);
 
 #endif

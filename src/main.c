@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:22:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/01 17:55:42 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 11:55:26 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			add_history(d.buf);
 			lexer(&d);
-			execute_from_path(&d, 0, 0);
-			free_2d(d.data);
+			// execute_from_path(&d, 0, 0);
 			lst_clear(&d.tkn);
 		}
 	}

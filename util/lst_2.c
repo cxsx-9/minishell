@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:11:41 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/02 13:10:20 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 11:42:41 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	lst_delone(t_token *tkn)
 
 void	lst_clear(t_token **tkn)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!tkn)
 		return ;
