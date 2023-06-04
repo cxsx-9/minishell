@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:11:41 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 11:42:41 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 18:27:54 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	lst_delone(t_token *tkn)
 {
 	if (tkn)
 	{
+		if (tkn->cmd)
+			free_2d(tkn->cmd);
 		free(tkn->str);
 		free(tkn);
 	}
@@ -36,6 +38,19 @@ void	lst_clear(t_token **tkn)
 			*tkn = tmp;
 		}
 	}
+}
+
+void	show_cmd(t_token *cmd)
+{
+	if (!cmd)
+		printf("OH Noo!! Why your list is emty!?");
+	while (cmd)
+	{
+		show_2d(cmd->cmd);
+		printf(" -> ");
+		cmd = cmd->next;
+	}
+	printf("\n");
 }
 
 void	lst_iter(t_token *tkn, void (*f)(char *))

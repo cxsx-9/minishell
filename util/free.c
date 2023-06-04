@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 12:23:11 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 11:41:34 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 17:39:52 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_2d(char **input)
 	int	i;
 
 	i = 0;
-	if (!input)
+	if (!input || !*input)
 		return ;
 	while (input[i])
 		free(input[i++]);
@@ -32,16 +32,4 @@ void	free_env(void *content)
 	free(env->key);
 	free(env->value);
 	free(env);
-}
-
-void	show_2d(char **input)
-{
-	int	i;
-
-	if (!input || !*input)
-		return ;
-	i = 0;
-	while (input[i])
-		printf("%s,", input[i++]);
-	printf("\n");
 }

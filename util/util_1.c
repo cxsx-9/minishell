@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 00:19:03 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 11:44:29 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 18:11:48 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,20 @@ char	*ft_strjoin_premium(char *s1, char *s2, int i)
 	if (s2 && i != 1 && i)
 		free(s2);
 	return (new);
+}
+
+void	print_tkn(char *str)
+{
+	printf(" %s ->", str);
+}
+
+void	show_2d(char **input)
+{
+	int	i;
+
+	if (!input || !*input)
+		return ;
+	i = 0;
+	while (input[i])
+		printf("%s,", input[i++]);
 }

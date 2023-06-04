@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:01:20 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 11:42:09 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 13:27:07 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_token	*lst_new(char *str, enum e_token type)
 		return (NULL);
 	new->str = str;
 	new->type = type;
+	new->cmd = NULL;
 	new->next = NULL;
 	return (new);
 }

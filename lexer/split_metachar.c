@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 22:39:54 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/03 01:24:08 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 18:46:23 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ int	case_cut_list(t_token **h, t_token *p, int i, int pos)
 	int				size;
 	int				redi;
 	t_token			*last;
-	enum e_token	type;
 
 	size = ft_strlen(p->str);
-	type = check_type(p->str[i]);
 	if (i != 0)
 		redi = i;
 	else
@@ -49,12 +47,24 @@ int	case_cut_list(t_token **h, t_token *p, int i, int pos)
 		else
 			redi = 1;
 	}
-	lst_insert(h, lst_new(ft_substr(p->str, 0, redi), type), pos);
-	last = lst_new(ft_substr(p->str, redi, size - redi), type);
+	lst_insert(h, lst_new(ft_substr(p->str, 0, redi), Idk), pos);
+	last = lst_new(ft_substr(p->str, redi, size - redi), Idk);
 	lst_insert(h, last, pos + 1);
 	last->next = p->next;
 	lst_delone(p);
 	return (0);
+}
+
+void	define_type(t_token *ptr)
+{
+	t_token	*tmp;
+	
+	tmp = ptr;
+	while (tmp)
+	{
+		tmp->type = check_type(tmp->str[0]);
+		tmp = tmp->next;
+	}
 }
 
 void	split_metachar(t_d *d, int pos, int size, int i)
@@ -83,4 +93,5 @@ void	split_metachar(t_d *d, int pos, int size, int i)
 		ptr = ptr->next;
 		pos++;
 	}
+	define_type(d->tkn);
 }

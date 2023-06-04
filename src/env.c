@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 23:35:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 01:11:02 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 15:17:21 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ void	print_env(void *content)
 
 	env = (t_env *)content;
 	printf("%s=%s\n", env->key, env->value);
-}
-
-void	print_tkn(char *str)
-{
-	printf(" %s ->", str);
 }
 
 void	init_env(t_d *d, char **envp)

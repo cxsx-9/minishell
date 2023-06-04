@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:46:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 11:53:24 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 18:37:20 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,8 @@ void	split_to_list(t_d *d, int i, int n)
 	d->tkn = NULL;
 	while (str[i])
 	{
-		new_tkn = malloc(sizeof(t_token));
-		new_tkn->str = ft_strndup(str[i], ft_strlen(str[i]));
-		new_tkn->type = Idk;
-		new_tkn->next = NULL;
+		new_tkn = lst_new(ft_strndup(str[i], ft_strlen(str[i])), Idk);
+		// new_tkn->type = check_type(new_tkn->str[0]);
 		lst_addback(&d->tkn, new_tkn);
 		i++;
 	}

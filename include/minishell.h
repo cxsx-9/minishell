@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 11:52:16 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 18:47:30 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,17 @@ enum e_token
 {
 	Idk,
 	Pipe,
-	Redi
+	Redi,
+	Cmd
 };
 
 typedef struct s_token
 {
+	char			**cmd;
 	char			*str;
 	enum e_token	type;
 	struct s_token	*next;
 }			t_token;
-
-typedef struct s_cmd
-{
-	char	**scmd;
-}			t_cmd;
 
 typedef struct s_env
 {
@@ -124,6 +121,7 @@ void			lst_delone(t_token *tkn);
 void			lst_clear(t_token **tkn);
 void			lst_iter(t_token *tkn, void (*f)(char *));
 void			lst_insert(t_token **lst, t_token *new, int pos);
+void			show_cmd(t_token *cmd);
 // util_1.c
 int				skip_quote(char *s, int i);
 char			*ft_strjoin_premium(char *s1, char *s2, int option);
@@ -136,3 +134,15 @@ void			print_tkn(char *str);
 char			*ft_getenv(t_list *my_env, char *str);
 
 #endif
+
+/*
+	(LV.1) linked-list : str -> str -> str
+	
+	for show: 	lst_iter(d->tkn, print_tkn);
+	for free: 	lst_clear(&d.tkn);
+
+	(LV.2) linked-list : cmd -> cmd -> cmd
+
+	fot show:	show_cmd(head);
+	for free:	lst_clear(&head);
+*/

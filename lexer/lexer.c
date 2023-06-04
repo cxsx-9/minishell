@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 11:54:39 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/04 18:35:49 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,37 @@ int	expand_var(char **new, char *s, int i, t_d *d)
 
 void	lexer(t_d *d)
 {
+	t_token	*tmp;
 	d->tkn = NULL;
 	if (check_special(d->buf))
 		return ;
 	split_to_list(d, 0, 0);
+
+	printf("from split : ");	//  --|
+	lst_iter(d->tkn, print_tkn); //   |
+	printf("\n");				 // --|
+	printf("type       : ");		// ----
+	tmp = d->tkn;							//
+	while (tmp)								//
+	{										//
+		printf(" %d ->", tmp->type);		//
+		tmp = tmp->next;					//
+	}										//
+	printf("\n");					// ----
+
 	split_metachar(d, 0, 0, 0);
+
+	printf("from meta  : ");	//  --|
+	lst_iter(d->tkn, print_tkn); //   |
+	printf("\n");				 // --|
+	printf("type       : ");		// ----
+	tmp = d->tkn;							//
+	while (tmp)								//
+	{										//
+		printf(" %d ->", tmp->type);		//
+		tmp = tmp->next;					//
+	}										//
+	printf("\n");					// ----
 	parser(d);
-	/*join_cmd(d); << next part*/
-	lst_iter(d->tkn, print_tkn);
-	printf("\n");
+	join_cmd(d);
 }
