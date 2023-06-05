@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:29:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 20:44:58 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:00:05 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	fill_cmd(t_token **head, t_token *runner, int size)
 	int		i;
 
 	i = 0;
-	cmd_list = lst_new(NULL, Cmd);
+	cmd_list = lst_new(NULL, CMD);
 	cmd_list->cmd = (char **)malloc(sizeof(char *) * (size + 1));
 	while (i < size)
 	{
 		cmd_list->cmd[i] = ft_strdup(runner->str);
-		if (runner->type == Redi)
-			cmd_list->type = Redi;
+		if (runner->type != CMD)
+			cmd_list->type = runner->type;
 		runner = runner->next;
 		i++;
 	}
@@ -46,7 +46,7 @@ void	join_cmd(t_d *d)
 	while (runner)
 	{
 		size++;
-		if (!runner->next || runner->next->type == Pipe)
+		if (!runner->next || runner->next->type == PIPE)
 		{
 			fill_cmd(&head, check_point, size);
 			size = 0;

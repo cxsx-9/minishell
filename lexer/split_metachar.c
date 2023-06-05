@@ -6,22 +6,26 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 22:39:54 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 00:47:11 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 14:58:03 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-enum e_token	check_type(char c)
+enum e_token	check_type(char *c)
 {
-	if (c == '|')
-		return (Pipe);
-	else if (c == '<')
-		return (Redi);
-	else if (c == '>')
-		return (Redi);
+	if (c[0] == '|')
+		return (PIPE);
+	else if (c[0] == '<' && c[1] && c[1] == c[0])
+		return (HDOC);
+	else if (c[0] == '>' && c[1] && c[1] == c[0])
+		return (REAPP);
+	else if (c[0] == '<')
+		return (REIN);
+	else if (c[0] == '>')
+		return (REOUT);
 	else
-		return (Idk);
+		return (CMD);
 }
 
 int	is_meta(char c)
@@ -47,8 +51,8 @@ int	case_cut_list(t_token **h, t_token *p, int i, int pos)
 		else
 			redi = 1;
 	}
-	lst_insert(h, lst_new(ft_substr(p->str, 0, redi), Idk), pos);
-	last = lst_new(ft_substr(p->str, redi, size - redi), Idk);
+	lst_insert(h, lst_new(ft_substr(p->str, 0, redi), UNKNOW), pos);
+	last = lst_new(ft_substr(p->str, redi, size - redi), UNKNOW);
 	lst_insert(h, last, pos + 1);
 	last->next = p->next;
 	lst_delone(p);
@@ -62,7 +66,7 @@ void	define_type(t_token *ptr)
 	tmp = ptr;
 	while (tmp)
 	{
-		tmp->type = check_type(tmp->str[0]);
+		tmp->type = check_type(tmp->str);
 		tmp = tmp->next;
 	}
 }

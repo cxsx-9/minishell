@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 01:25:31 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:11:31 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,13 @@
 
 enum e_token
 {
-	Idk,
-	Pipe,
-	Redi,
-	Cmd
+	CMD,
+	PIPE,
+	REIN,
+	HDOC,
+	REOUT,
+	REAPP,
+	UNKNOW
 };
 
 typedef struct s_token
@@ -80,7 +83,7 @@ int				check_special(char *str);
 // smart_split.c
 char			**smart_split(char *s);
 // split_metachar.c
-enum e_token	check_type(char c);
+enum e_token	check_type(char *c);
 int				is_meta(char c);
 int				case_cut_list(t_token **h, t_token *p, int i, int pos);
 void			split_metachar(t_d *d, int pos, int size, int i);

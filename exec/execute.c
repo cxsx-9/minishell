@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:30:08 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 01:28:01 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:57:22 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,15 @@ void	execute_from_path(t_d *d, int i, int status)
 void	main_execute(t_d *d)
 {
 	t_token	*tmp;
+	int		size;
 
 	tmp = d->tkn;
-	printf("execute\n");
+	size = lst_size(d->tkn);
+	printf("It's %d command, Good luck\n", size);
+	// if (size == 1)
+
+	// if (tmp)
+	// 	printf("Now I point at [%s]\n",tmp->cmd[0]);
+	// else
+	// 	printf("Noo It's running\n");
 }
