@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 00:19:03 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 00:44:52 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:12:38 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,22 @@ char	*ft_strjoin_premium(char *s1, char *s2, int i)
 void	print_tkn(char *str)
 {
 	printf(" %s ->", str);
+}
+
+enum e_token	check_type(char *c)
+{
+	if (c[0] == '|')
+		return (PIPE);
+	else if (c[0] == '<' && c[1] && c[1] == c[0])
+		return (HDOC);
+	else if (c[0] == '>' && c[1] && c[1] == c[0])
+		return (REAPP);
+	else if (c[0] == '<')
+		return (REIN);
+	else if (c[0] == '>')
+		return (REOUT);
+	else
+		return (CMD);
 }
 
 void	show_2d(char **input)

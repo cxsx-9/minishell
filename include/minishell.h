@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 15:11:31 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:34:11 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ enum e_token
 
 typedef struct s_token
 {
-	char			**cmd;
+	char			**token;
 	char			*str;
 	enum e_token	type;
 	struct s_token	*next;
@@ -83,7 +83,6 @@ int				check_special(char *str);
 // smart_split.c
 char			**smart_split(char *s);
 // split_metachar.c
-enum e_token	check_type(char *c);
 int				is_meta(char c);
 int				case_cut_list(t_token **h, t_token *p, int i, int pos);
 void			split_metachar(t_d *d, int pos, int size, int i);
@@ -107,13 +106,14 @@ void			join_cmd(t_d *d);
 
 // EXECUTE
 // execute.c
-void			execute_from_path(t_d *d, int i, int status);
+void			execute_from_path(t_token *cmd, t_d *d);
 void			main_execute(t_d *d);
 
 // UTIL
 // free.c
 void			free_2d(char **input);
 void			free_env(void *content);
+enum e_token	check_type(char *c);
 void			show_2d(char **input);
 // lst_1.c
 t_token			*lst_new(char *str, enum e_token type);
@@ -130,6 +130,8 @@ void			show_cmd(t_token *cmd);
 // util_1.c
 int				skip_quote(char *s, int i);
 char			*ft_strjoin_premium(char *s1, char *s2, int option);
+// util_2.c
+int				check_builtin(char *str);
 
 // SRC/ENV
 // env.c

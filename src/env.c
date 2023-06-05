@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 23:35:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/04 15:17:21 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:54:16 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	init_env(t_d *d, char **envp)
 	i = 0;
 	d->envp = envp;
 	d->env = NULL;
+	d->exit_status = 0;
 	while (envp[i])
 	{
 		key_n_value = ft_split(envp[i], '=');

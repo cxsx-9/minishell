@@ -6,27 +6,11 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 22:39:54 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 14:58:03 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:12:43 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-enum e_token	check_type(char *c)
-{
-	if (c[0] == '|')
-		return (PIPE);
-	else if (c[0] == '<' && c[1] && c[1] == c[0])
-		return (HDOC);
-	else if (c[0] == '>' && c[1] && c[1] == c[0])
-		return (REAPP);
-	else if (c[0] == '<')
-		return (REIN);
-	else if (c[0] == '>')
-		return (REOUT);
-	else
-		return (CMD);
-}
 
 int	is_meta(char c)
 {

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:29:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 15:00:05 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:09:10 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void	fill_cmd(t_token **head, t_token *runner, int size)
 
 	i = 0;
 	cmd_list = lst_new(NULL, CMD);
-	cmd_list->cmd = (char **)malloc(sizeof(char *) * (size + 1));
+	cmd_list->token = (char **)malloc(sizeof(char *) * (size + 1));
 	while (i < size)
 	{
-		cmd_list->cmd[i] = ft_strdup(runner->str);
+		cmd_list->token[i] = ft_strdup(runner->str);
 		if (runner->type != CMD)
 			cmd_list->type = runner->type;
 		runner = runner->next;
 		i++;
 	}
-	cmd_list->cmd[i] = 0;
+	cmd_list->token[i] = 0;
 	lst_addback(head, cmd_list);
 }
 

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 15:09:28 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/05 22:03:58 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,19 @@
 int	check_special(char *str)
 {
 	int		i;
+	int		q;
 
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
-			if (skip_quote(str, i) < 0)
-				return (1);
-			else
-				i += skip_quote(str, i);
+			q = str[i];
+			i++;
+			while (str[i] && str[i] != q)
+				i++;
 			if (!str[i])
-				break ;
+				return (1);
 		}
 		if (str[i] == '\\' || str[i] == ';')
 			return (1);
@@ -40,7 +41,7 @@ int	varlen(char *s, int i)
 	int	len;
 
 	len = 0;
-	while (s[i] && ft_isalnum(s[i]))
+	while (s[i] && (ft_isalnum(s[i]) || s[i] == '?'))
 	{
 		i++;
 		len++;
@@ -59,6 +60,8 @@ int	expand_var(char **new, char *s, int i, t_d *d)
 	len = varlen(s, i);
 	if (!len)
 		value = "$\0";
+	else if (s[i] == '?')
+		value = ft_itoa(d->exit_status);
 	else
 	{
 		var_name = ft_substr(s, i, len);
