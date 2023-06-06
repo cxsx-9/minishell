@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 17:34:11 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:13:12 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@
 # define KCYN  "\x1B[36m"
 # define KWHT  "\x1B[37m"
 # define NONE  "\033[0m"
+
+# define BLKB "\e[40m"
+# define REDB "\e[41m"
+# define GRNB "\e[42m"
+# define YELB "\e[43m"
+# define BLUB "\e[44m"
+# define MAGB "\e[45m"
+# define CYNB "\e[46m"
+# define WHTB "\e[47m"
 
 # define MAX_HISTORY 100
 
@@ -108,6 +117,11 @@ void			join_cmd(t_d *d);
 // execute.c
 void			execute_from_path(t_token *cmd, t_d *d);
 void			main_execute(t_d *d);
+// builtin_1.c
+void			ft_pwd(t_d *d);
+void			ft_echo(char **args, t_d *d);
+void			ft_export(char **args, t_d *d);
+void			ft_env(t_d *d);
 
 // UTIL
 // free.c
@@ -132,6 +146,8 @@ int				skip_quote(char *s, int i);
 char			*ft_strjoin_premium(char *s1, char *s2, int option);
 // util_2.c
 int				check_builtin(char *str);
+int				do_builtin(char **str, t_d *d);
+int				args_count(char **str);
 
 // SRC/ENV
 // env.c

@@ -16,6 +16,8 @@ SRC = src/main.c \
 	lexer/fill_in.c \
 	lexer/join_cmd.c \
 	exec/execute.c \
+	exec/builtin_1.c \
+	exec/builtin_2.c \
 	util/free.c \
 	util/lst_1.c \
 	util/lst_2.c \

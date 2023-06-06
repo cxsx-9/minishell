@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:30:08 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 22:10:12 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:14:45 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	main_execute(t_d *d)
 
 	cmd = d->tkn;
 	size = lst_size(cmd);
-	// printf("It's %d command, Good luck\n", size);
 	while (cmd)
 	{
 		if (check_builtin(cmd->token[0]))
 		{
 			printf("Builtin func.\n");
+			do_builtin(cmd->token, d);
 		}
-		if (cmd->type == CMD)
+		else if (cmd->type == CMD)
 			execute_from_path(cmd, d);
 		cmd = cmd->next;
 	}
