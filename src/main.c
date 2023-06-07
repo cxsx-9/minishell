@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:22:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 22:10:37 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/07 21:33:16 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ int	main(int ac, char **av, char **envp)
 			lexer(&d);
 			main_execute(&d);
 			lst_clear(&d.tkn);
+			free(d.buf);
 		}
 	}
 	printf("%s>> EOF ;-;\n%s", KRED, NONE);
 	ft_lstclear(&d.env, free_env);
 	rl_clear_history();
-	free(d.buf);
 }

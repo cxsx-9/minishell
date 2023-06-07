@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 19:46:38 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/06 18:08:21 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/07 23:34:46 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ void	ft_echo(char **args, t_d *d)
 {
 	int	i;
 	int	n;
+	int	size;
 
 	i = 0;
 	n = 0;
+	size = args_count(args);
 	i++;
-	if (ft_strcmp(args[i], "-n") == 0)
+	if (size != 1 && ft_strcmp(args[i], "-n") == 0)
 	{
 		n++;
 		i++;
@@ -79,18 +81,16 @@ void	add_new_env(char **var, t_d *d)
 		{
 			env = list->content;
 			if (!ft_strncmp(env->key, var[0], ft_strlen(var[0])))
-				env->value = var[1];
+			{
+				free(env->value);
+				env->value = ft_strdup(var[1]);
+			}
 			list = list->next;
 		}		
 	}
 	else
-	{
-		env = malloc(sizeof(t_env));
-		env->key = var[0];
-		env->value = var[1];
-		ft_lstadd_back(&d->env, ft_lstnew((void *) env));
-	}
-	free(var);
+		create_new_env(ft_strdup(var[0]), ft_strdup(var[1]), d);
+	free_2d(var);
 }
 
 void	ft_export(char **args, t_d *d)

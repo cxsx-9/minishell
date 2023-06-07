@@ -1,6 +1,6 @@
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 RM = rm -rf
 LDFLAGS = -L/usr/local/opt/readline/lib
 CFLAGS += -I/usr/local/opt/readline/include
@@ -9,7 +9,6 @@ LIBFT = libft/libft.a
 SRC = src/main.c \
 	src/env.c \
 	lexer/lexer.c \
-	lexer/smart_split.c \
 	lexer/split_to_list.c \
 	lexer/split_metachar.c \
 	lexer/parser.c \
