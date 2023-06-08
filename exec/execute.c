@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:30:08 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/07 23:13:09 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/08 22:11:53 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	execute_from_path(t_token *cmd, t_d *d)
 		{
 			path[i] = ft_strjoin(path[i], "/");
 			path[i] = ft_strjoin(path[i], cmd->token[0]);
-			execve(path[i], cmd->token, d->envp);
+			if (!access(path[i], F_OK))
+				execve(path[i], cmd->token, d->envp);
 		}
 		printf("bash : %s: command not found\n", cmd->token[0]);
 		exit(127);

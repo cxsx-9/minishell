@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 19:46:38 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/07 23:34:46 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/08 22:09:59 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ void	ft_echo(char **args, t_d *d)
 		i++;
 		if (args[i])
 			printf(" ");
-		else if (!args[i] && n)
-			printf("%s%c%s", WHTB, '%', NONE);
+		else if (!args[i] && !n)
+			printf("\n");
 	}
-	printf("\n");
 	d->exit_status = 0;
 }
 
