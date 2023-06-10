@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:10:04 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/07 23:18:57 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 15:53:20 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ void	ft_exit(char **args, t_d *d)
 {
 	int				size;
 	unsigned int	ret;
-	int				i;
 
-	i = 0;
 	size = args_count(args);
 	if (size > 1)
 	{

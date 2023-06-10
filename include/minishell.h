@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/08 15:52:39 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 15:52:47 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void			print_tkn(char *str);
 enum e_token	check_type(char *c);
 void			show_2d(char **input);
 // util_2.c
-int				check_builtin(char *str);
+int				check_builtin(char **args);
 int				do_builtin(char **str, t_d *d);
 int				args_count(char **str);
 void			show_cmd(t_token *cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/07 16:23:47 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 16:18:59 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	lexer(t_d *d)
 		return ;
 	split_to_list(d, 0, 0);
 	split_metachar(d, 0, 0, 0);
+	if (check_error_arange(d))
+		return ;
 	parser(d);
 	join_cmd(d);
 }

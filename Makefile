@@ -2,8 +2,10 @@ NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 RM = rm -rf
-LDFLAGS = -L/usr/local/opt/readline/lib
-CFLAGS += -I/usr/local/opt/readline/include
+LDFLAGS = -L/opt/homebrew/opt/readline/lib
+CFLAGS += -I/opt/homebrew/opt/readline/include
+# LDFLAGS = -L/usr/local/opt/readline/lib
+# CFLAGS += -I/usr/local/opt/readline/include
 INCLUDE = include/
 LIBFT = libft/libft.a
 SRC = src/main.c \
@@ -21,7 +23,8 @@ SRC = src/main.c \
 	util/lst_1.c \
 	util/lst_2.c \
 	util/util_1.c \
-	util/util_2.c
+	util/util_2.c \
+	util/util_3.c
 
 OBJ = $(SRC:.c=.o)
 

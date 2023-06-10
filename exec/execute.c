@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:30:08 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/08 22:11:53 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 15:53:04 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,25 @@ void	execute_from_path(t_token *cmd, t_d *d)
 void	main_execute(t_d *d)
 {
 	t_token	*cmd;
-	int		size;
 
 	cmd = d->tkn;
-	size = lst_size(cmd);
 	while (cmd)
 	{
-		if (check_builtin(cmd->token[0]))
+		// if (cmd->next)
+			// pipe;
+		if (check_builtin(cmd->token) == 1)
 		{
-			printf(KBLU"Builtin func.\n"NONE);
+			printf(KBLU"Builtin func. no output\n"NONE);
 			do_builtin(cmd->token, d);
 		}
-		else if (cmd->type == CMD)
+		else if (check_builtin(cmd->token) == 2)
 		{
-			execute_from_path(cmd, d);
+			printf(KBLU"Builtin func. with stdout\n"NONE);
+			do_builtin(cmd->token, d);
+
 		}
+		else if (cmd->type == CMD)
+			execute_from_path(cmd, d);
 		cmd = cmd->next;
 	}
 }
