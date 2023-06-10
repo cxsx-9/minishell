@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:22:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/08 21:57:23 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 19:46:22 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	main(int ac, char **av, char **envp)
 		else if (ft_strlen(d.buf))
 		{
 			add_history(d.buf);
-			lexer(&d);
-			main_execute(&d);
+			if (lexer(&d))
+				main_execute(&d);
 			lst_clear(&d.tkn);
 			free(d.buf);
 		}

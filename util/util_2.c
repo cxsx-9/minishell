@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:29:49 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/10 15:54:45 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 22:28:08 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,11 @@
 
 int	check_builtin(char **args)
 {
-	if (!ft_strcmp("cd", args[0])
-		|| !ft_strcmp("exit", args[0])
-		|| !ft_strcmp("unset", args[0])
-		|| (!ft_strcmp("export", args[0]) && args[1]))
+	if (!ft_strcmp("cd", args[0]) || !ft_strcmp("exit", args[0])
+		|| !ft_strcmp("unset", args[0]) || !ft_strcmp("export", args[0])
+		|| !ft_strcmp("echo", args[0]) || !ft_strcmp("pwd", args[0])
+		|| !ft_strcmp("env", args[0]))
 		return (1);
-	else if (!ft_strcmp("echo", args[0])
-		|| !ft_strcmp("pwd", args[0])
-		|| !ft_strcmp("env", args[0])
-		|| (!ft_strcmp("export", args[0]) && !args[1]))
-		return (2);
 	return (0);
 }
 
@@ -58,7 +53,7 @@ int	is_inside(char c, char *set)
 	return (0);
 }
 
-int	do_builtin(char **args, t_d *d)
+int	do_builtin(char **args, t_d *d, int do_fork)
 {
 	if (!ft_strcmp("echo", args[0]))
 		ft_echo(args, d);
@@ -74,5 +69,10 @@ int	do_builtin(char **args, t_d *d)
 		ft_env(d);
 	else if (!ft_strcmp("exit", args[0]))
 		ft_exit(args, d);
+	if (do_fork)
+	{
+		free_for_all(d);
+		exit(d->exit_status);
+	}
 	return (1);
 }

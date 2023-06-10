@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/10 16:18:59 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 21:33:41 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	expand_var(char **new, char *s, int i, t_d *d)
 	if (!len)
 		value = "$\0";
 	else if (s[i] == '?')
+	{
 		value = ft_itoa(d->exit_status);
+		*new = ft_strjoin_premium(*new, value, 3);
+	}
 	else
 	{
 		var_name = ft_substr(s, i, len);
@@ -69,20 +72,21 @@ int	expand_var(char **new, char *s, int i, t_d *d)
 		if (!value)
 			value = "\0";
 		free(var_name);
+		*new = ft_strjoin_premium(*new, value, 1);
 	}
-	*new = ft_strjoin_premium(*new, value, 1);
 	return (len + 1);
 }
 
-void	lexer(t_d *d)
+int	lexer(t_d *d)
 {
 	d->tkn = NULL;
 	if (check_special(d->buf))
-		return ;
+		return (0);
 	split_to_list(d, 0, 0);
 	split_metachar(d, 0, 0, 0);
-	if (check_error_arange(d))
-		return ;
+	if (check_error_arrange(d))
+		return (0);
 	parser(d);
 	join_cmd(d);
+	return (1);
 }

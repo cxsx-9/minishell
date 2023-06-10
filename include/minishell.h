@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/10 15:52:47 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 22:23:38 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct s_d
 // LEXER
 
 // lexer.c
-void			lexer(t_d *d);
+int				lexer(t_d *d);
 int				expand_var(char **new, char *s, int i, t_d *d);
 int				varlen(char *s, int i);
 int				check_special(char *str);
@@ -113,8 +113,9 @@ void			join_cmd(t_d *d);
 
 // EXECUTE
 // execute.c
-void			execute_from_path(t_token *cmd, t_d *d);
+void			execute_from_path(char **token, t_d *d);
 void			main_execute(t_d *d);
+void			fork_exec(char **args, t_d *d, int type);
 // builtin_1.c
 void			ft_pwd(t_d *d);
 void			ft_echo(char **args, t_d *d);
@@ -151,10 +152,15 @@ enum e_token	check_type(char *c);
 void			show_2d(char **input);
 // util_2.c
 int				check_builtin(char **args);
-int				do_builtin(char **str, t_d *d);
+int				do_builtin(char **str, t_d *d, int do_fork);
 int				args_count(char **str);
 void			show_cmd(t_token *cmd);
 int				is_inside(char c, char *set);
+// util_3.c
+int				check_error_arrange(t_d *d);
+void			error_print_format_1(char *s1);
+void			error_print_format_2(char *s1, int option);
+void			error_print_format_3(char *s1, char *s2, int option);
 
 // SRC/ENV
 // env.c
@@ -203,3 +209,38 @@ void			create_new_env(char *key, char *value, t_d *d);
 	}										//
 	printf("\n\n");					// ----
 */
+
+	// if (!ft_strcmp("cd", args[0])
+	// 	|| !ft_strcmp("exit", args[0])
+	// 	|| !ft_strcmp("unset", args[0])
+	// 	|| (!ft_strcmp("export", args[0]) && args[1]))
+	// 	return (1);
+	// else if (!ft_strcmp("echo", args[0])
+	// 	|| !ft_strcmp("pwd", args[0])
+	// 	|| !ft_strcmp("env", args[0])
+	// 	|| (!ft_strcmp("export", args[0]) && !args[1]))
+	// 	return (2);
+	// return (0);
+
+	// if (do_fork)
+	// 	fork_exec(cmd->token, d, check_builtin(cmd->token));
+	// else
+	// {
+	// 	if (check_builtin(cmd->token))
+	// 		do_builtin(cmd->token, d, 0);
+	// 	else
+	// 		fork_exec(cmd->token, d, 0);
+	// }
+
+			// if (check_builtin(cmd->token))
+		// {
+		// 	printf(KBLU"Builtin func.\n"NONE);
+		// 	if (do_fork)
+		// 		fork_exec(cmd->token, d, 1);
+		// 	else
+		// 		do_builtin(cmd->token, d, do_fork);
+		// }
+		// else if (cmd->type == CMD)
+		// 	fork_exec(cmd->token, d, 0);
+		// else
+		// 	printf(KBLU"No func.\n"NONE);

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 19:46:38 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/08 22:09:59 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 22:09:49 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	ft_export(char **args, t_d *d)
 		}
 		else
 		{
-			printf("bash: %s: `%s': not a valid identifier\n", args[0], var[0]);
+			error_print_format_3(args[0], var[0], 1);
 			d->exit_status = 1;
 			return ;
 		}

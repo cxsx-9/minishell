@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:10:04 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/10 15:53:20 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 22:21:43 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_unset(char **args, t_d *d)
 	{
 		if (!check_valid(args[i]) || ft_isdigit(args[i][0]))
 		{
-			printf("bash: %s: `%s': not a valid identifier\n", args[0], args[1]);
+			error_print_format_3(args[0], args[1], 1);
 			d->exit_status = 1;
 			return ;
 		}
@@ -58,8 +58,7 @@ void	is_good_digit(char **args, t_d *d)
 	{
 		if (!ft_isdigit(args[1][i]))
 		{
-			printf("bash: %s: %s: ", args[0], args[1]);
-			printf("numeric argument required\n");
+			error_print_format_3(args[0], args[1], 2);
 			free_for_all(d);
 			exit(255);
 		}
@@ -78,7 +77,7 @@ void	ft_exit(char **args, t_d *d)
 		is_good_digit(args, d);
 		if (size > 2)
 		{
-			printf("bash: %s: too many arguments\n", args[0]);
+			error_print_format_2(args[0], 2);
 			d->exit_status = 1;
 			return ;
 		}
@@ -102,8 +101,7 @@ void	ft_cd(char **args, t_d *d)
 	{
 		if (chdir(args[1]))
 		{
-			printf("bash: %s: %s: ", args[0], args[1]);
-			printf("No such file or directory\n");
+			error_print_format_3(args[0], args[1], 3);
 			d->exit_status = 1;
 			return ;
 		}
