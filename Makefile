@@ -1,6 +1,6 @@
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 RM = rm -rf
 # LDFLAGS = -L/opt/homebrew/opt/readline/lib
 # CFLAGS += -I/opt/homebrew/opt/readline/include
@@ -26,6 +26,7 @@ SRC = src/main.c \
 	util/util_1.c \
 	util/util_2.c \
 	util/util_3.c \
+	util/util_4.c \
 	util/show.c \
 	get_next_line/get_next_line.c \
 	get_next_line/get_next_line_utils.c
