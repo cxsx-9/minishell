@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 18:16:53 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 01:02:58 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ enum e_token
 	UNKNOW
 };
 
-typedef struct s_redi
+typedef struct s_redirect
 {
 	int	is_error;
 	int	infile;
 	int	outfile;
 	int	heredoc;
 	int	append;
-}			t_redi;
+}			t_redirect;
 
 typedef struct s_token
 {
@@ -75,6 +75,7 @@ typedef struct s_token
 	char			**red;
 	char			*str;
 	enum e_token	type;
+	struct s_redirect	*stat;
 	struct s_token	*next;
 }			t_token;
 
@@ -100,6 +101,7 @@ int				lexer(t_d *d);
 int				expand_var(char **new, char *s, int i, t_d *d);
 int				varlen(char *s, int i);
 int				check_special(char *str);
+int				is_all_wh(char *s);
 // split_metachar.c
 int				is_meta(char c);
 int				case_cut_list(t_token **h, t_token *p, int i, int pos);
@@ -122,9 +124,6 @@ int				fill_in_str(char **new, char *s, int i);
 int				fill_in_dq(char **new, char *s, int i);
 // join_cmd.c
 void			join_cmd(t_d *d);
-// parser_in_out.c
-void			manage_infile(t_token *t, t_token *r);
-void			manage_infile(t_token *t, t_token *r);
 
 // EXECUTE
 // execute.c
@@ -141,6 +140,8 @@ void			ft_env(t_d *d);
 void			ft_unset(char **args, t_d *d);
 void			ft_exit(char **args, t_d *d);
 void			ft_cd(char **args, t_d *d);
+// redi_1.c
+void			do_redirect(t_token *h);
 
 // UTIL
 // free.c
@@ -162,21 +163,22 @@ void			lst_delmid(t_list *head, t_list *terget);
 // util_1.c
 int				skip_quote(char *s, int i);
 char			*ft_strjoin_premium(char *s1, char *s2, int option);
-void			print_tkn(char *str);
 enum e_token	check_type(char *c);
 void			show_2d(char **input);
 // util_2.c
 int				check_builtin(char **args);
 int				do_builtin(char **str, t_d *d, int do_fork);
 int				args_count(char **str);
-void			show_cmd(t_token *cmd);
-void			show_red(t_token *cmd);
 int				is_inside(char c, char *set);
 // util_3.c
 int				check_error_arrange(t_d *d);
 void			error_print_format_1(char *s1);
 void			error_print_format_2(char *s1, int option);
 void			error_print_format_3(char *s1, char *s2, int option);
+// show.c
+void			print_tkn(char *str);
+void			show_cmd(t_token *cmd);
+void			show_red(t_token *cmd);
 
 // SRC/ENV
 // env.c

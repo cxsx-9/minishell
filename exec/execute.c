@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:30:08 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 18:05:51 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 01:02:05 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,22 @@ void	main_execute(t_d *d)
 
 	cmd = d->tkn;
 	do_fork = 1;
+
 	printf(KBLU"Execute func.\n"NONE);
 	if (lst_size(cmd) == 1)
 		do_fork = 0;
+	do_redirect(cmd);
 	while (cmd && cmd->token[0] != NULL)
 	{
-		if (do_fork)
-			fork_exec(cmd->token, d, check_builtin(cmd->token));
-		else if (!do_fork && check_builtin(cmd->token))
-			do_builtin(cmd->token, d, 0);
-		else
-			fork_exec(cmd->token, d, 0);
+		// if (!cmd->stat->is_error)
+		// {
+			if (do_fork)
+				fork_exec(cmd->token, d, check_builtin(cmd->token));
+			else if (!do_fork && check_builtin(cmd->token))
+				do_builtin(cmd->token, d, 0);
+			else
+				fork_exec(cmd->token, d, 0);
+		// }
 		cmd = cmd->next;
 	}
 }

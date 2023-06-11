@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 12:23:11 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/07 20:10:59 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/11 19:30:34 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_2d(char **input)
 	int	i;
 
 	i = 0;
-	if (!input || !*input)
+	if (!input)
 		return ;
 	while (input[i])
 		free(input[i++]);

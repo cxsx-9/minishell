@@ -16,16 +16,17 @@ SRC = src/main.c \
 	lexer/parser.c \
 	lexer/fill_in.c \
 	lexer/join_cmd.c \
-	lexer/parser_in_out.c \
 	exec/execute.c \
 	exec/builtin_1.c \
 	exec/builtin_2.c \
+	exec/redi_1.c \
 	util/free.c \
 	util/lst_1.c \
 	util/lst_2.c \
 	util/util_1.c \
 	util/util_2.c \
 	util/util_3.c \
+	util/show.c \
 	get_next_line/get_next_line.c \
 	get_next_line/get_next_line_utils.c
 

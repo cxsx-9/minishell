@@ -6,11 +6,25 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 18:16:36 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/11 21:24:10 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_all_wh(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (!((s[i] >= 9 && s[i] <= 13) || s[i] == 32))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	check_special(char *str)
 {
@@ -80,41 +94,14 @@ int	expand_var(char **new, char *s, int i, t_d *d)
 int	lexer(t_d *d)
 {
 	t_token	*tmp;
+	
 	d->tkn = NULL;
-
 	if (check_special(d->buf))
 		return (0);
 	split_to_list(d, 0, 0);
-
-	printf("from list  : ");	//  --|
-	lst_iter(d->tkn, print_tkn); //   |
-	printf("\n");				 // --|
-	printf("type       : ");		// ----
-	tmp = d->tkn;							//
-	while (tmp)								//
-	{										//
-		printf(" %d ->", tmp->type);		//
-		tmp = tmp->next;					//
-	}										//
-	printf("\n");					// ----
-
 	split_metachar(d, 0, 0, 0);
-	
-	printf("from split : ");	//  --|
-	lst_iter(d->tkn, print_tkn); //   |
-	printf("\n");				 // --|
-	printf("type       : ");		// ----
-	tmp = d->tkn;							//
-	while (tmp)								//
-	{										//
-		printf(" %d ->", tmp->type);		//
-		tmp = tmp->next;					//
-	}										//
-	printf("\n");					// ----
-
 	if (check_error_arrange(d))
 		return (0);
-	
 	parser(d);
 	join_cmd(d);
 

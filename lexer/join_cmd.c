@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:29:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 18:45:05 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/11 22:49:07 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**fill_cmd(t_token *runner, int size)
 	char	**token;
 	int		i;
 	int		r;
-	
+
 	i = 0;
 	r = redi_count(runner, size);
 	token = malloc(sizeof(char *) * (size + 1 - (r * 2)));
@@ -53,22 +53,20 @@ char	**fill_cmd(t_token *runner, int size)
 		i++;
 	}
 	token[i] = 0;
-	return(token);
+	return (token);
 }
-
 
 char	**fill_red(t_token *runner, int size)
 {
 	char	**red;
 	int		i;
 	int		r;
-	
+
 	i = 0;
 	r = redi_count(runner, size);
 	red = malloc(sizeof(char *) * ((r * 2) + 1));
 	while (i < r * 2)
 	{
-		printf("inside\n");
 		if (is_meta(runner->str[0]) != 2)
 		{
 			runner = runner->next;
@@ -84,12 +82,21 @@ char	**fill_red(t_token *runner, int size)
 	return (red);
 }
 
+void	create_token(t_token **head, t_token *check, int size)
+{
+	t_token	*token;
+
+	token = lst_new(NULL, CMD);
+	token->token = fill_cmd(check, size);
+	token->red = fill_red(check, size);
+	lst_addback(head, token);
+}
+
 void	join_cmd(t_d *d)
 {
 	t_token	*runner;
 	t_token	*check_point;
 	t_token	*head;
-	t_token	*token;
 	int		size;
 
 	head = NULL;
@@ -101,14 +108,11 @@ void	join_cmd(t_d *d)
 		size++;
 		if (!runner->next || runner->next->type == PIPE)
 		{
-			token = lst_new(NULL, CMD);
-			token->token = fill_cmd(check_point, size);
-			token->red = fill_red(check_point, size);
+			create_token(&head, check_point, size);
 			size = 0;
 			if (runner->next)
 				runner = runner->next;
 			check_point = runner->next;
-			lst_addback(&head, token);
 		}
 		runner = runner->next;
 	}
