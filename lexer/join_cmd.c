@@ -6,30 +6,82 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:29:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 17:09:10 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:45:05 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fill_cmd(t_token **head, t_token *runner, int size)
+int	redi_count(t_token *t, int size)
 {
-	t_token	*cmd_list;
-	int		i;
+	int	i;
+	int	c;
 
 	i = 0;
-	cmd_list = lst_new(NULL, CMD);
-	cmd_list->token = (char **)malloc(sizeof(char *) * (size + 1));
-	while (i < size)
+	c = 0;
+	while (c < size && t->str)
 	{
-		cmd_list->token[i] = ft_strdup(runner->str);
-		if (runner->type != CMD)
-			cmd_list->type = runner->type;
+		if (is_meta(t->str[0]) == 2)
+		{
+			i++;
+			c++;
+			t = t->next;
+		}
+		t = t->next;
+		c++;
+	}
+	return (i);
+}
+
+char	**fill_cmd(t_token *runner, int size)
+{
+	char	**token;
+	int		i;
+	int		r;
+	
+	i = 0;
+	r = redi_count(runner, size);
+	token = malloc(sizeof(char *) * (size + 1 - (r * 2)));
+	while (i < (size - (r * 2)))
+	{
+		if (is_meta(runner->str[0]) == 2)
+			runner = runner->next->next;
+		if (!runner)
+			break ;
+		token[i] = ft_strdup(runner->str);
 		runner = runner->next;
 		i++;
 	}
-	cmd_list->token[i] = 0;
-	lst_addback(head, cmd_list);
+	token[i] = 0;
+	return(token);
+}
+
+
+char	**fill_red(t_token *runner, int size)
+{
+	char	**red;
+	int		i;
+	int		r;
+	
+	i = 0;
+	r = redi_count(runner, size);
+	red = malloc(sizeof(char *) * ((r * 2) + 1));
+	while (i < r * 2)
+	{
+		printf("inside\n");
+		if (is_meta(runner->str[0]) != 2)
+		{
+			runner = runner->next;
+			continue ;
+		}
+		red[i++] = ft_strdup(runner->str);
+		runner = runner->next;
+		red[i] = ft_strdup(runner->str);
+		runner = runner->next;
+		i++;
+	}
+	red[i] = 0;
+	return (red);
 }
 
 void	join_cmd(t_d *d)
@@ -37,6 +89,7 @@ void	join_cmd(t_d *d)
 	t_token	*runner;
 	t_token	*check_point;
 	t_token	*head;
+	t_token	*token;
 	int		size;
 
 	head = NULL;
@@ -48,11 +101,14 @@ void	join_cmd(t_d *d)
 		size++;
 		if (!runner->next || runner->next->type == PIPE)
 		{
-			fill_cmd(&head, check_point, size);
+			token = lst_new(NULL, CMD);
+			token->token = fill_cmd(check_point, size);
+			token->red = fill_red(check_point, size);
 			size = 0;
 			if (runner->next)
 				runner = runner->next;
 			check_point = runner->next;
+			lst_addback(&head, token);
 		}
 		runner = runner->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:11:41 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/07 23:08:54 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/11 17:48:05 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	lst_delone(t_token *tkn)
 	{
 		if (tkn->token)
 			free_2d(tkn->token);
+		if (tkn->red)
+			free_2d(tkn->red);
 		free(tkn->str);
 		free(tkn);
 	}

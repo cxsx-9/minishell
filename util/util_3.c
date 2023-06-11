@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 16:20:12 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/10 22:23:48 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:49:31 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ void	error_print_format_2(char *s1, int option)
 	write(2, s1, ft_strlen(s1));
 	if (option == 1)
 		ft_putstr_fd(": command not found\n", 2);
-	if (option == 2)
+	else if (option == 2)
 		ft_putstr_fd(": too many arguments\n", 2);
+	else if (option == 3)
+		ft_putstr_fd(": No such file or directory\n", 2);
+	else if (option == 4)
+		ft_putstr_fd(": Permission denied\n", 2);
 }
 
 void	error_print_format_3(char *s1, char *s2, int option)
@@ -56,7 +60,8 @@ int	check_error_arrange(t_d *d)
 	}
 	while (ptr)
 	{
-		if (ptr->type != CMD && ptr->next && ptr->next->type != CMD)
+		if (ptr->type != CMD && ptr->type != PIPE
+			&& ptr->next && ptr->next->type != CMD)
 		{
 			error_print_format_1(ptr->next->str);
 			d->exit_status = 258;

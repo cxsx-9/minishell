@@ -16,6 +16,7 @@ SRC = src/main.c \
 	lexer/parser.c \
 	lexer/fill_in.c \
 	lexer/join_cmd.c \
+	lexer/parser_in_out.c \
 	exec/execute.c \
 	exec/builtin_1.c \
 	exec/builtin_2.c \
@@ -24,7 +25,9 @@ SRC = src/main.c \
 	util/lst_2.c \
 	util/util_1.c \
 	util/util_2.c \
-	util/util_3.c
+	util/util_3.c \
+	get_next_line/get_next_line.c \
+	get_next_line/get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o)
 

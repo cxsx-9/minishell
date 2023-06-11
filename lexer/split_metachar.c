@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 22:39:54 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 16:12:43 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/11 03:05:07 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	is_meta(char c)
 {
-	if (c == '|' || c == '<' || c == '>')
+	if (c == '|')
 		return (1);
+	else if (c == '<' || c == '>')
+		return (2);
 	return (0);
 }
 
@@ -55,6 +57,17 @@ void	define_type(t_token *ptr)
 	}
 }
 
+int	ignr_meta(int size, char *s)
+{
+	if (size == 1)
+		return (1);
+	else if (size == 2 && s[0] == '<' && s[1] == '>')
+		return (1);
+	else if (size == 2 && s[0] == s[1])
+		return (1);
+	return (0);
+}
+
 void	split_metachar(t_d *d, int pos, int size, int i)
 {
 	t_token	*ptr;
@@ -68,8 +81,7 @@ void	split_metachar(t_d *d, int pos, int size, int i)
 		{
 			if (ptr->str[i] == '\'' || ptr->str[i] == '\"')
 				i += skip_quote(ptr->str, i);
-			else if (is_meta(ptr->str[i]) && !(size == 1
-					|| ((size == 2) && ptr->str[0] == ptr->str[1])))
+			else if (is_meta(ptr->str[i]) && !(ignr_meta(size, ptr->str)))
 			{
 				pos = case_cut_list(&d->tkn, ptr, i, pos);
 				ptr = d->tkn;

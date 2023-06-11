@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/10 22:23:38 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:16:53 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
+# include <fcntl.h>
+# include "get_next_line.h"
 
 # define KNRM  "\x1B[0m"
 # define KRED  "\x1B[31m"
@@ -58,9 +60,19 @@ enum e_token
 	UNKNOW
 };
 
+typedef struct s_redi
+{
+	int	is_error;
+	int	infile;
+	int	outfile;
+	int	heredoc;
+	int	append;
+}			t_redi;
+
 typedef struct s_token
 {
 	char			**token;
+	char			**red;
 	char			*str;
 	enum e_token	type;
 	struct s_token	*next;
@@ -110,6 +122,9 @@ int				fill_in_str(char **new, char *s, int i);
 int				fill_in_dq(char **new, char *s, int i);
 // join_cmd.c
 void			join_cmd(t_d *d);
+// parser_in_out.c
+void			manage_infile(t_token *t, t_token *r);
+void			manage_infile(t_token *t, t_token *r);
 
 // EXECUTE
 // execute.c
@@ -155,6 +170,7 @@ int				check_builtin(char **args);
 int				do_builtin(char **str, t_d *d, int do_fork);
 int				args_count(char **str);
 void			show_cmd(t_token *cmd);
+void			show_red(t_token *cmd);
 int				is_inside(char c, char *set);
 // util_3.c
 int				check_error_arrange(t_d *d);

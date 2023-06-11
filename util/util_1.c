@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 00:19:03 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/05 16:12:38 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/10 23:58:50 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ enum e_token	check_type(char *c)
 		return (HDOC);
 	else if (c[0] == '>' && c[1] && c[1] == c[0])
 		return (REAPP);
+	else if (c[0] == '>' || (c[0] == '<' && c[1] == '>'))
+		return (REOUT);
 	else if (c[0] == '<')
 		return (REIN);
-	else if (c[0] == '>')
-		return (REOUT);
 	else
 		return (CMD);
 }
