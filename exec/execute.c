@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:30:08 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 19:20:15 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:52:07 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ void	main_execute(t_d *d)
 	if (lst_size(cmd) == 1)
 		do_fork = 0;
 	do_here(cmd);
-	printf("[execute.c] CMD size [%d]\n", lst_size(cmd));
-	if (cmd && cmd->token[0] == NULL)
-		printf("[execute.c] NO  cmd\n");
+	// printf("[execute.c] CMD size [%d]\n", lst_size(cmd));
+	// if (cmd && cmd->token[0] == NULL)
+		// printf("[execute.c] NO  cmd\n");
 	while (cmd)
 	{
-		printf("[execute.c] TRY      [%d]\n", i + 1);
+		// printf("[execute.c] TRY      [%d]\n", i + 1);
 		do_redirect(cmd);
 		if (!cmd->stat->is_error && cmd->token[0] != NULL)
 		{
-			printf("[execute.c] DO       [%d]\n", i + 1);
+			// printf("[execute.c] DO       [%d]\n", i + 1);
 			if (do_fork)
 				fork_exec(cmd->token, d, check_builtin(cmd->token));
 			else if (!do_fork && check_builtin(cmd->token))

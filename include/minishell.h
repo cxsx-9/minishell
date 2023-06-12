@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 16:16:46 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 23:05:00 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ typedef struct s_redirect
 	int	is_error;
 	int	infile;
 	int	outfile;
-	int	heredoc;
-	int	append;
 }			t_redirect;
 
 typedef struct s_token
@@ -153,12 +151,19 @@ void			ft_cd(char **args, t_d *d);
 // redi_1.c
 void			do_here(t_token *h);
 void			do_redirect(t_token *cmd);
+char			*create_name(char *file, int i, int id);
+// redi_2.c
+void			do_outfile(char *file, int i, t_token *cmd);
+void			do_append(char *file, int i, t_token *cmd);
+void			setup_inout(t_token *cmd);
 
 // UTIL
 // free.c
 void			free_2d(char **input);
 void			free_env(void *content);
 void			free_for_all(t_d *d);
+void			close_fd(t_token *tkn);
+void			delete_file(t_token *cmd);
 // lst_1.c
 t_token			*lst_new(char *str, enum e_token type);
 t_token			*lst_last(t_token *tkn);

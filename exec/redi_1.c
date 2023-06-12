@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:48:45 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 21:30:18 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 23:13:47 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void    create_hdoc(char *file, int i, int id, t_token *cmd)
 
 	name = create_name(file, i, id);
 	fd = open(name, O_WRONLY | O_APPEND | O_CREAT, 0644);
-	printf("[redi_1.c] HDOC open  [%d]\n", fd);
+	// printf("[redi_1.c] HDOC open  [%d]\n", fd);
 	buff = NULL;
 	buff = readline("> ");
 	while (ft_strcmp(file, buff)
@@ -86,18 +86,20 @@ void	do_infile(char *file, int i, t_token *cmd)
 	else
 	{
 		fd = open(file, O_RDONLY);
-		printf("[redi_1.c] open [%s][%d]\n", file, fd);
-		printf("[redi_1.c] save at [%d] : \n", i);
+		printf("[redi_1.c] open [%s][%d]", file, fd);
+		printf(" at [%d] : \n", i);
 		cmd->red_fd[i] = fd;							// comment 3
 	}
 }
 
 void	do_redirect(t_token *cmd)
 {
+	t_token	*tmp;
 	int	i;
 	int	id;
 
 	id = 0;
+	tmp = cmd;
 	while (cmd)
 	{
 		i = 0;
@@ -105,10 +107,18 @@ void	do_redirect(t_token *cmd)
 		{
 			if (check_type(cmd->red[i]) == REIN)
 				do_infile(cmd->red[i + 1], (i / 2), cmd);
+			else if (check_type(cmd->red[i]) == REOUT)
+				do_outfile(cmd->red[i + 1], (i / 2), cmd);
+			else if (check_type(cmd->red[i]) == REAPP)
+				do_append(cmd->red[i + 1], (i / 2), cmd);
 			i += 2;
 		}
 		id++;
 		cmd = cmd->next;
 	}
-	printf("[redi_1.c] finished redirection\n");
+	setup_inout(tmp);
+	printf("Last man standing is\n");
+	printf("infile ->[%d]\n", tmp->stat->infile);
+	printf("outfile->[%d]\n", tmp->stat->outfile);
+	// printf("[redi_1.c] finished redirection\n");
 }

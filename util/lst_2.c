@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:11:41 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 21:39:21 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:53:21 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,18 @@
 
 void	lst_delone(t_token *tkn)
 {
-	int	i;
-	int	size;
-
-	i = 0;
 	if (tkn)
 	{
 		if (tkn->token)
 			free_2d(tkn->token);
-		if (tkn->red && tkn->red[i])
-			size = args_count(tkn->red) / 2;
-		while (tkn->red && i < size)										// comment 4 ???
-		{
-			printf("[lst_2.c] POSITION [%d]\n", (i));
-			printf("[lst_2.c] DELO TRY [%d]\n", tkn->red_fd[i]);
-			if (tkn->red_fd[i] != 0)
-			{
-				printf("[lst_2.c] DELCLOSE [%d]\n", tkn->red_fd[i]);
-				close (tkn->red_fd[i]);
-			}
-			i++;
-		}
+		if (tkn->red && tkn->red[0])
+			close_fd(tkn);
 		free_2d(tkn->red);
-		free(tkn->red_fd);													// comment 5
+		free(tkn->red_fd);
 		free(tkn->str);
 		free(tkn->stat);
 		free(tkn);
-		printf("[lst_2.c] Finished FREE!\n");
+		// printf("[lst_2.c] Finished FREE!\n");
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 12:23:11 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 16:18:38 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:55:11 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,50 @@ void	free_for_all(t_d *d)
 	free(d->buf);
 }
 
-// void	delete_file(t_token *d)
-// {
-	
-// }
+void	close_fd(t_token *tkn)
+{
+	t_token	*tmp;
+	int		i;
+	int		size;
+
+	tmp = tkn;
+	i = 0;
+	size = args_count(tmp->red) / 2;
+	while (tmp->red && i < size)
+	{
+		// printf("[free.c] POSITION [%d]\n", (i));
+		// printf("[free.c] DELO TRY [%d]\n", tmp->red_fd[i]);
+		if (tmp->red_fd[i] != 0)
+		{
+			// printf("[free.c] DELCLOSE [%d]\n", tmp->red_fd[i]);
+			close (tmp->red_fd[i]);
+		}
+		i++;
+	}
+	delete_file(tkn);
+}
+
+void	delete_file(t_token *cmd)
+{
+	int	i;
+	int	id;
+	char *name;
+
+	id = 0;
+	while (cmd)
+	{
+		i = 0;
+		while (cmd->red[i])
+		{
+			if (check_type(cmd->red[i]) == HDOC)
+			{
+				name = create_name(cmd->red[i + 1], (i / 2), id);
+				unlink(name);
+				free(name);
+			}
+			i += 2;
+		}
+		id++;
+		cmd = cmd->next;
+	}
+}
