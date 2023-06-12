@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:48:45 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 19:23:35 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:30:18 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void    create_hdoc(char *file, int i, int id, t_token *cmd)
 	char *name;
 	char *buff;
 
+	cmd = (t_token *) cmd;
+
 	name = create_name(file, i, id);
 	fd = open(name, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	printf("[redi_1.c] HDOC open  [%d]\n", fd);
@@ -43,10 +45,10 @@ void    create_hdoc(char *file, int i, int id, t_token *cmd)
 	}
 	free(buff);
 	close(fd);
-	fd = open(name, O_RDONLY);
+	fd = open(name, O_RDONLY);					// comment 3
 	printf("[redi_1.c] save [%s][%d] at [%d] : \n", name, fd, i);
 	free(name);
-	cmd->red_fd[i] = fd;
+	cmd->red_fd[i] = fd;							// comment 3
 }
 
 void	do_here(t_token *cmd)
@@ -84,9 +86,9 @@ void	do_infile(char *file, int i, t_token *cmd)
 	else
 	{
 		fd = open(file, O_RDONLY);
-		printf("[redi_1.c] INFD open  [%d]\n", fd);
+		printf("[redi_1.c] open [%s][%d]\n", file, fd);
 		printf("[redi_1.c] save at [%d] : \n", i);
-		cmd->red_fd[i] = fd;
+		cmd->red_fd[i] = fd;							// comment 3
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:29:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 19:17:30 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:23:29 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,19 @@ void	create_token(t_token **head, t_token *check, int size)
 {
 	t_token	*t;
 	int		fd_size;
-	int		i;
+	int		i;									// comment 2
 
 	fd_size = redi_count(check, size);
 	t = lst_new(NULL, CMD);
 	t->token = fill_cmd(check, size);
 	t->red = fill_red(check, size);
-	t->red_fd = malloc(sizeof(int *) * fd_size);
-	i = 0;
-	while (i < fd_size)
-	{
+	t->red_fd = malloc(sizeof(int *) * fd_size);	// comment
+	i = 0;										// comment
+	while (i < fd_size)							// comment
+	{							
 		t->red_fd[i] = 0;
 		i++;
-	}
+	}											// comment
 	lst_addback(head, t);
 }
 
