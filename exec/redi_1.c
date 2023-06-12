@@ -6,48 +6,33 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:48:45 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 01:05:22 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:23:35 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	manage_infile(t_token *t, t_token *r)
-// {
-//     int fd;
+char	*create_name(char *file, int i, int id)
+{
+	char *name;
+	char *new_id;
+	
+	new_id = ft_strjoin_premium(ft_itoa(id), ft_itoa(i), 3);
+	name = ft_strjoin_premium(file, new_id, 2);
+	return (name);
+}
 
-//     t = (t_token* ) t;
-//     r = r->next;
-//     if (access(r->str, F_OK | X_OK))
-//     {
-//     if (access(r->str, F_OK))
-//             error_print_format_2(r->str, 3);
-//         else if(access(r->str, X_OK))
-//             error_print_format_2(r->str, 4);
-//         t->redi->is_error = 1;
-//         return ;
-//     }
-//     t->redi->infile = open(r->str, O_RDONLY);
-// }
-
-// void	manage_infile(t_token *t, t_token *r)
-// {
-//     char    *line;
-
-    
-// }
-
-void    do_hdoc(char *file, int id)
+void    create_hdoc(char *file, int i, int id, t_token *cmd)
 {
     int	fd;
 	char *name;
 	char *buff;
 
-	name = ft_strjoin_premium(file, ft_itoa(id), 2);
+	name = create_name(file, i, id);
 	fd = open(name, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	printf("[redi_1.c] HDOC open  [%d]\n", fd);
 	buff = NULL;
 	buff = readline("> ");
-	printf("[%s][%s]\n", file, buff);
 	while (ft_strcmp(file, buff)
 		|| (ft_strlen(file) != ft_strlen(buff)))
 	{
@@ -55,32 +40,73 @@ void    do_hdoc(char *file, int id)
 		write (fd, buff, ft_strlen(buff));
 		free(buff);
 		buff = readline("> ");
-		printf("[%s][%s][%zu][%zu]\n", file, buff, ft_strlen(file), ft_strlen(buff));
 	}
-	printf("exit ;-;\n");
-	if (buff)
-		free(buff);
+	free(buff);
 	close(fd);
+	fd = open(name, O_RDONLY);
+	printf("[redi_1.c] save [%s][%d] at [%d] : \n", name, fd, i);
+	free(name);
+	cmd->red_fd[i] = fd;
 }
 
-void    do_redirect(t_token *h)
+void	do_here(t_token *cmd)
 {
-    t_token *cmd;
-    int     i;
-    int     id;
+	int	i;
+	int	id;
 
-    cmd = h;
-    i = 0;
-    id = 0;
-    while (cmd)
-    {
-        while (cmd->red[i])
-        {
-            if (check_type(cmd->red[i]) == HDOC)
-                do_hdoc(cmd->red[i + 1], id);
-            i += 2;
-        }
+	id = 0;
+	while (cmd)
+	{
+		i = 0;
+		while (cmd->red[i])
+		{
+			if (check_type(cmd->red[i]) == HDOC)
+				create_hdoc(cmd->red[i + 1], (i / 2), id, cmd);
+			i += 2;
+		}
 		id++;
-        cmd = cmd->next;
-    }
+		cmd = cmd->next;
+	}
+}
+
+void	do_infile(char *file, int i, t_token *cmd)
+{
+	int	fd;
+
+	if (access(file, F_OK | R_OK))
+	{
+		if (access(file, F_OK))
+			error_print_format_2(file, 3);
+		else if(access(file, R_OK))
+			error_print_format_2(file, 4);
+		cmd->stat->is_error = 1;
+	}
+	else
+	{
+		fd = open(file, O_RDONLY);
+		printf("[redi_1.c] INFD open  [%d]\n", fd);
+		printf("[redi_1.c] save at [%d] : \n", i);
+		cmd->red_fd[i] = fd;
+	}
+}
+
+void	do_redirect(t_token *cmd)
+{
+	int	i;
+	int	id;
+
+	id = 0;
+	while (cmd)
+	{
+		i = 0;
+		while (!cmd->stat->is_error && cmd->red[i])
+		{
+			if (check_type(cmd->red[i]) == REIN)
+				do_infile(cmd->red[i + 1], (i / 2), cmd);
+			i += 2;
+		}
+		id++;
+		cmd = cmd->next;
+	}
+	printf("[redi_1.c] finished redirection\n");
 }

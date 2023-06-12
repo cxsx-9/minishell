@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 01:14:47 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:16:46 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_token
 {
 	char			**token;
 	char			**red;
+	int				*red_fd;
 	char			*str;
 	enum e_token	type;
 	struct s_redirect	*stat;
@@ -137,8 +138,8 @@ void			join_cmd(t_d *d);
 void			execute_from_path(char **token, t_d *d);
 void			main_execute(t_d *d);
 void			close_pipe(t_fd *fd);
-// void			fork_exec(char **args, t_d *d, int type);
-void			fork_exec(char **args, t_d *d, int type, t_fd *fd);
+void			fork_exec(char **args, t_d *d, int type);
+// void			fork_exec(char **args, t_d *d, int type, t_fd *fd);
 // builtin_1.c
 void			ft_pwd(t_d *d);
 void			ft_echo(char **args, t_d *d);
@@ -150,7 +151,8 @@ void			ft_unset(char **args, t_d *d);
 void			ft_exit(char **args, t_d *d);
 void			ft_cd(char **args, t_d *d);
 // redi_1.c
-void			do_redirect(t_token *h);
+void			do_here(t_token *h);
+void			do_redirect(t_token *cmd);
 
 // UTIL
 // free.c

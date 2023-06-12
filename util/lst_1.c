@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:01:20 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 17:52:34 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:17:35 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ t_token	*lst_new(char *str, enum e_token type)
 	new->type = type;
 	new->token = NULL;
 	new->red = NULL;
+	new->red_fd = NULL;
+	new->stat = malloc(sizeof(t_redirect));
+	new->stat->is_error = 0;
 	new->next = NULL;
 	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:22:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 21:19:33 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:13:04 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,18 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		d.buf = readline(KGRN "csantivi \% " NONE);
+		printf(" d.buf : [%s]\n", d.buf);
 		if (!d.buf)
+		{
+			printf("[main.c] WHY BREAK???\n");
 			break ;
+		}
 		else if (ft_strlen(d.buf) && !is_all_wh(d.buf))
 		{
 			add_history(d.buf);
 			if (lexer(&d))
 				main_execute(&d);
+			printf("[main.c] exec done\n");
 			lst_clear(&d.tkn);
 			free(d.buf);
 		}

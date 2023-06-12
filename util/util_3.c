@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 16:20:12 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 15:49:31 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:16:22 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	error_print_format_1(char *s1)
 {
+	printf("[errp] error_print [1]\n");
 	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 	write(2, s1, ft_strlen(s1));
 	write(2, "'\n", 2);
@@ -21,6 +22,7 @@ void	error_print_format_1(char *s1)
 
 void	error_print_format_2(char *s1, int option)
 {
+	printf("[errp] error_print [2]\n");
 	ft_putstr_fd("bash: ", 2);
 	write(2, s1, ft_strlen(s1));
 	if (option == 1)
@@ -35,6 +37,7 @@ void	error_print_format_2(char *s1, int option)
 
 void	error_print_format_3(char *s1, char *s2, int option)
 {
+	printf("[errp] error_print [3]\n");
 	ft_putstr_fd("bash: ", 1);
 	write(2, s1, ft_strlen(s1));
 	write(2, ": `", 2);
@@ -60,11 +63,14 @@ int	check_error_arrange(t_d *d)
 	}
 	while (ptr)
 	{
-		if (ptr->type != CMD && ptr->type != PIPE
-			&& ptr->next && ptr->next->type != CMD)
+		if ((ptr->type != CMD && ptr->type != PIPE)
+			&& ((ptr->next == NULL) || (ptr->next && ptr->next->type != CMD)))
 		{
-			error_print_format_1(ptr->next->str);
-			d->exit_status = 258;
+			if (ptr->next)
+			{
+				error_print_format_1(ptr->next->str);
+				d->exit_status = 258;
+			}
 			return (1);
 		}
 		ptr = ptr->next;

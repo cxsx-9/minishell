@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:11:41 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 19:29:30 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:19:54 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,29 @@
 
 void	lst_delone(t_token *tkn)
 {
+	int	i;
+
+	i = 0;
 	if (tkn)
 	{
 		if (tkn->token)
 			free_2d(tkn->token);
+		// delete_file(tkn);
+		while (tkn->red && tkn->red[i])
+		{
+			printf("[lst_2.c] POSITION [%d]\n", (i / 2));
+			printf("[lst_2.c] DELO TRY [%d]\n", tkn->red_fd[i / 2]);
+			if (tkn->red_fd[i / 2] != 0)
+				printf("[lst_2.c] DELCLOSE [%d]\n", tkn->red_fd[i / 2]);
+				close (tkn->red_fd[i / 2]);
+			i += 2;
+		}
 		free_2d(tkn->red);
+		free(tkn->red_fd);
 		free(tkn->str);
+		free(tkn->stat);
 		free(tkn);
+		printf("[lst_2.c] Finished FREE!\n");
 	}
 }
 

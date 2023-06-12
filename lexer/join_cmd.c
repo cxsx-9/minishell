@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:29:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 22:49:07 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:17:30 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,22 @@ char	**fill_red(t_token *runner, int size)
 
 void	create_token(t_token **head, t_token *check, int size)
 {
-	t_token	*token;
+	t_token	*t;
+	int		fd_size;
+	int		i;
 
-	token = lst_new(NULL, CMD);
-	token->token = fill_cmd(check, size);
-	token->red = fill_red(check, size);
-	lst_addback(head, token);
+	fd_size = redi_count(check, size);
+	t = lst_new(NULL, CMD);
+	t->token = fill_cmd(check, size);
+	t->red = fill_red(check, size);
+	t->red_fd = malloc(sizeof(int *) * fd_size);
+	i = 0;
+	while (i < fd_size)
+	{
+		t->red_fd[i] = 0;
+		i++;
+	}
+	lst_addback(head, t);
 }
 
 void	join_cmd(t_d *d)
@@ -120,3 +130,63 @@ void	join_cmd(t_d *d)
 	d->tkn = head;
 	lst_clear(&check_point);
 }
+
+
+
+
+
+
+
+
+// ----- old version ------
+
+// #include "minishell.h"
+
+// void	fill_cmd(t_token **head, t_token *runner, int size)
+// {
+// 	t_token	*cmd_list;
+// 	int		i;
+
+// 	i = 0;
+// 	cmd_list = lst_new(NULL, CMD);
+// 	cmd_list->token = (char **)malloc(sizeof(char *) * (size + 1));
+// 	while (i < size)
+// 	{
+// 		cmd_list->token[i] = ft_strdup(runner->str);
+// 		if (runner->type != CMD)
+// 			cmd_list->type = runner->type;
+// 		runner = runner->next;
+// 		i++;
+// 	}
+// 	cmd_list->token[i] = 0;
+// 	lst_addback(head, cmd_list);
+// }
+
+// void	join_cmd(t_d *d)
+// {
+// 	t_token	*runner;
+// 	t_token	*check_point;
+// 	t_token	*head;
+// 	int		size;
+
+// 	head = NULL;
+// 	runner = d->tkn;
+// 	check_point = runner;
+// 	size = 0;
+// 	while (runner)
+// 	{
+// 		size++;
+// 		if (!runner->next || runner->next->type == PIPE)
+// 		{
+// 			fill_cmd(&head, check_point, size);
+// 			size = 0;
+// 			if (runner->next)
+// 				runner = runner->next;
+// 			check_point = runner->next;
+// 		}
+// 		runner = runner->next;
+// 	}
+// 	check_point = d->tkn;
+// 	d->tkn = head;
+// 	lst_clear(&check_point);
+// }
