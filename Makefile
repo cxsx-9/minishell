@@ -28,7 +28,6 @@ SRC = src/main.c \
 	util/util_1.c \
 	util/util_2.c \
 	util/util_3.c \
-	util/util_4.c \
 	util/show.c
 
 OBJ = $(SRC:.c=.o)
