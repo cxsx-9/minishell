@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:56:00 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 23:08:17 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/13 23:52:37 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ void	do_outfile(char *file, int i, t_token *cmd)
 	}
 	else
 	{
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC,  0644);
-		printf("[redi_2.c] outfile [%s][%d]\n", file, fd);
-		printf("[redi_2.c] save at [%d] : \n", i);
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		cmd->red_fd[i] = fd;
 	}
 }
@@ -41,21 +39,43 @@ void	do_append(char *file, int i, t_token *cmd)
 	}
 	else
 	{
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND | O_TRUNC,  0644);
-		printf("[redi_2.c] append [%s][%d]\n", file, fd);
-		printf("[redi_2.c] save at [%d] : \n", i);
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		cmd->red_fd[i] = fd;
 	}
 }
 
-// void	set_fd()
+void	set_default_inout(t_fd *p, t_token *cmd)
+{
+	int	i;
+	int	size;
 
-void	setup_inout(t_token *cmd)
+	i = 0;
+	size = lst_size(cmd) - 1;
+	if (size == 0)
+		return ;
+	while (cmd)
+	{
+		if (i == 0)
+			cmd->stat->outfile = p->pipe_fd[(i * 2) + 1];
+		else if (cmd->next == NULL)
+			cmd->stat->infile = p->pipe_fd[(i * 2) - 2];
+		else
+		{
+			cmd->stat->infile = p->pipe_fd[(i * 2) - 2];
+			cmd->stat->outfile = p->pipe_fd[(i * 2) + 1];
+		}
+		i++;
+		cmd = cmd->next;
+	}
+}
+
+void	setup_inout(t_d *d, t_token *cmd)
 {
 	int	i;
 	int	id;
 
 	id = 0;
+	set_default_inout(d->pipe, cmd);
 	while (cmd)
 	{
 		i = 0;

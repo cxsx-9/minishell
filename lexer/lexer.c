@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 22:55:52 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 00:24:57 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	expand_var(char **new, char *s, int i, t_d *d)
 	char	*value;
 	int		len;
 
-	while (s[i] == '\'' || s[i] == '\"' || s[i] == '$')
+	if (s[i] == '\'' || s[i] == '\"' || s[i] == '$')
 		i++;
 	len = varlen(s, i);
 	if (!len)
@@ -93,8 +93,6 @@ int	expand_var(char **new, char *s, int i, t_d *d)
 
 int	lexer(t_d *d)
 {
-	// t_token	*tmp;     ///
-
 	d->tkn = NULL;
 	if (check_special(d->buf))
 		return (0);
@@ -104,18 +102,5 @@ int	lexer(t_d *d)
 		return (0);
 	parser(d);
 	join_cmd(d);
-
-	// printf("from cmd   : ");	 //  --|
-	// show_cmd(d->tkn); //   |
-	// printf("from red   : ");	 //  --|
-	// show_red(d->tkn); //   |
-	// printf("type       : ");		// ----
-	// tmp = d->tkn;							//
-	// while (tmp)								//
-	// {										//
-	// 	printf(" %d ->", tmp->type);		//
-	// 	tmp = tmp->next;					//
-	// }										//
-	// printf("\n\n");					// ----
 	return (1);
 }

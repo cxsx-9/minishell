@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:22:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 22:51:49 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/13 23:59:06 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ int	main(int ac, char **av, char **envp)
 	av = (char **) av;
 	init_env(&d, envp);
 	setup_signal();
-	printf("%s>> Start ENGINE!\n%s", KRED, NONE);
+	printf("%s>> Start ENGINE!\n%s", KCYN, NONE);
 	while (1)
 	{
-		d.buf = readline(KGRN "csantivi \% " NONE);
+		d.buf = readline(KGRN "csantivi & psaeyang \% " NONE);
 		if (!d.buf)
 			break ;
 		else if (ft_strlen(d.buf) && !is_all_wh(d.buf))

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:29:49 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 21:21:06 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/13 23:22:42 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 int	check_builtin(char **args)
 {
-	if (!ft_strcmp("cd", args[0]) || !ft_strcmp("exit", args[0])
-		|| !ft_strcmp("unset", args[0]) || !ft_strcmp("export", args[0])
-		|| !ft_strcmp("echo", args[0]) || !ft_strcmp("pwd", args[0])
-		|| !ft_strcmp("env", args[0]))
+	if (!ft_strcmp("cd", args[0])
+		|| !ft_strcmp("exit", args[0])
+		|| !ft_strcmp("unset", args[0])
+		|| (!ft_strcmp("export", args[0]) && args[1]))
 		return (1);
+	else if (!ft_strcmp("echo", args[0])
+		|| !ft_strcmp("pwd", args[0])
+		|| !ft_strcmp("env", args[0])
+		|| (!ft_strcmp("export", args[0]) && !args[1]))
+		return (2);
 	return (0);
 }
 

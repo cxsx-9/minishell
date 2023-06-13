@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 12:23:11 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 22:55:11 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/13 23:25:04 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void	free_for_all(t_d *d)
 	ft_lstclear(&d->env, free_env);
 	rl_clear_history();
 	free(d->buf);
+	if (d->pipe != NULL)
+	{
+		free(d->pipe->pipe_fd);
+		free(d->pipe);
+	}
 }
 
 void	close_fd(t_token *tkn)
@@ -53,13 +58,8 @@ void	close_fd(t_token *tkn)
 	size = args_count(tmp->red) / 2;
 	while (tmp->red && i < size)
 	{
-		// printf("[free.c] POSITION [%d]\n", (i));
-		// printf("[free.c] DELO TRY [%d]\n", tmp->red_fd[i]);
 		if (tmp->red_fd[i] != 0)
-		{
-			// printf("[free.c] DELCLOSE [%d]\n", tmp->red_fd[i]);
 			close (tmp->red_fd[i]);
-		}
 		i++;
 	}
 	delete_file(tkn);
@@ -67,9 +67,9 @@ void	close_fd(t_token *tkn)
 
 void	delete_file(t_token *cmd)
 {
-	int	i;
-	int	id;
-	char *name;
+	int		i;
+	int		id;
+	char	*name;
 
 	id = 0;
 	while (cmd)

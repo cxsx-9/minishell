@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:11:41 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 22:53:21 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/13 23:17:29 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	lst_delone(t_token *tkn)
 		free(tkn->str);
 		free(tkn->stat);
 		free(tkn);
-		// printf("[lst_2.c] Finished FREE!\n");
 	}
 }
 

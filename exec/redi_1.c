@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:48:45 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 23:13:47 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/13 23:29:33 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,22 @@
 
 char	*create_name(char *file, int i, int id)
 {
-	char *name;
-	char *new_id;
-	
+	char	*name;
+	char	*new_id;
+
 	new_id = ft_strjoin_premium(ft_itoa(id), ft_itoa(i), 3);
 	name = ft_strjoin_premium(file, new_id, 2);
 	return (name);
 }
 
-void    create_hdoc(char *file, int i, int id, t_token *cmd)
+void	create_hdoc(char *file, int i, int id, t_token *cmd)
 {
-    int	fd;
-	char *name;
-	char *buff;
-
-	cmd = (t_token *) cmd;
+	int		fd;
+	char	*name;
+	char	*buff;
 
 	name = create_name(file, i, id);
 	fd = open(name, O_WRONLY | O_APPEND | O_CREAT, 0644);
-	// printf("[redi_1.c] HDOC open  [%d]\n", fd);
 	buff = NULL;
 	buff = readline("> ");
 	while (ft_strcmp(file, buff)
@@ -45,10 +42,9 @@ void    create_hdoc(char *file, int i, int id, t_token *cmd)
 	}
 	free(buff);
 	close(fd);
-	fd = open(name, O_RDONLY);					// comment 3
-	printf("[redi_1.c] save [%s][%d] at [%d] : \n", name, fd, i);
+	fd = open(name, O_RDONLY);
 	free(name);
-	cmd->red_fd[i] = fd;							// comment 3
+	cmd->red_fd[i] = fd;
 }
 
 void	do_here(t_token *cmd)
@@ -79,26 +75,22 @@ void	do_infile(char *file, int i, t_token *cmd)
 	{
 		if (access(file, F_OK))
 			error_print_format_2(file, 3);
-		else if(access(file, R_OK))
+		else if (access(file, R_OK))
 			error_print_format_2(file, 4);
 		cmd->stat->is_error = 1;
 	}
 	else
 	{
 		fd = open(file, O_RDONLY);
-		printf("[redi_1.c] open [%s][%d]", file, fd);
-		printf(" at [%d] : \n", i);
-		cmd->red_fd[i] = fd;							// comment 3
+		cmd->red_fd[i] = fd;
 	}
 }
 
-void	do_redirect(t_token *cmd)
+void	do_redirect(t_d *d, t_token *cmd)
 {
 	t_token	*tmp;
-	int	i;
-	int	id;
+	int		i;
 
-	id = 0;
 	tmp = cmd;
 	while (cmd)
 	{
@@ -113,12 +105,7 @@ void	do_redirect(t_token *cmd)
 				do_append(cmd->red[i + 1], (i / 2), cmd);
 			i += 2;
 		}
-		id++;
 		cmd = cmd->next;
 	}
-	setup_inout(tmp);
-	printf("Last man standing is\n");
-	printf("infile ->[%d]\n", tmp->stat->infile);
-	printf("outfile->[%d]\n", tmp->stat->outfile);
-	// printf("[redi_1.c] finished redirection\n");
+	setup_inout(d, tmp);
 }

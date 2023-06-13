@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/12 23:05:00 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 00:11:30 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <curses.h>
 # include <term.h>
 # include <fcntl.h>
-# include "get_next_line.h"
 
 # define KNRM  "\x1B[0m"
 # define KRED  "\x1B[31m"
@@ -62,7 +61,7 @@ enum e_token
 
 typedef struct s_fd
 {
-	int		(*pipe)[2];
+	int		*pipe_fd;
 	int		size;
 	int		i;
 }		t_fd;
@@ -76,13 +75,13 @@ typedef struct s_redirect
 
 typedef struct s_token
 {
-	char			**token;
-	char			**red;
-	int				*red_fd;
-	char			*str;
-	enum e_token	type;
+	char				**token;
+	char				**red;
+	int					*red_fd;
+	char				*str;
+	enum e_token		type;
 	struct s_redirect	*stat;
-	struct s_token	*next;
+	struct s_token		*next;
 }			t_token;
 
 typedef struct s_env
@@ -98,6 +97,7 @@ typedef struct s_d
 	char	**envp;
 	t_list	*env;
 	t_token	*tkn;
+	t_fd	*pipe;
 }			t_d;
 
 // LEXER
@@ -132,11 +132,13 @@ int				fill_in_dq(char **new, char *s, int i);
 void			join_cmd(t_d *d);
 
 // EXECUTE
-// execute.c
-void			execute_from_path(char **token, t_d *d);
+// execute_1.c
 void			main_execute(t_d *d);
+void			clear_pipe(t_fd *pipe, int extra, int freed);
 void			close_pipe(t_fd *fd);
-void			fork_exec(char **args, t_d *d, int type);
+// execute_2.c
+void			execute_from_path(char **token, t_d *d);
+void			fork_exec(t_token *cmd, t_d *d, int type, int i);
 // void			fork_exec(char **args, t_d *d, int type, t_fd *fd);
 // builtin_1.c
 void			ft_pwd(t_d *d);
@@ -150,12 +152,12 @@ void			ft_exit(char **args, t_d *d);
 void			ft_cd(char **args, t_d *d);
 // redi_1.c
 void			do_here(t_token *h);
-void			do_redirect(t_token *cmd);
+void			do_redirect(t_d *d, t_token *cmd);
 char			*create_name(char *file, int i, int id);
 // redi_2.c
 void			do_outfile(char *file, int i, t_token *cmd);
 void			do_append(char *file, int i, t_token *cmd);
-void			setup_inout(t_token *cmd);
+void			setup_inout(t_d *d, t_token *cmd);
 
 // UTIL
 // free.c
@@ -191,10 +193,6 @@ int				check_error_arrange(t_d *d);
 void			error_print_format_1(char *s1);
 void			error_print_format_2(char *s1, int option);
 void			error_print_format_3(char *s1, char *s2, int option);
-// util_4.c
-void			dupdup(t_fd *fd);
-void			pipe_all(t_fd *fd);
-void			fork_fork(t_d *d, t_token *cmd, t_fd *fd, int do_fork);
 
 // show.c
 void			print_tkn(char *str);
@@ -271,7 +269,7 @@ void			create_new_env(char *key, char *value, t_d *d);
 	// 		fork_exec(cmd->token, d, 0);
 	// }
 
-			// if (check_builtin(cmd->token))
+		// if (check_builtin(cmd->token))
 		// {
 		// 	printf(KBLU"Builtin func.\n"NONE);
 		// 	if (do_fork)
