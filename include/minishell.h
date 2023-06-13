@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/14 00:52:12 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 01:26:04 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void			clear_pipe(t_fd *pipe, int extra, int freed);
 void			close_pipe(t_fd *fd);
 // execute_2.c
 void			execute_from_path(char **token, t_d *d);
-void			fork_exec(t_token *cmd, t_d *d, int type, int i);
+int				fork_exec(t_token *cmd, t_d *d, int type, int i);
 // void			fork_exec(char **args, t_d *d, int type, t_fd *fd);
 // builtin_1.c
 void			ft_pwd(t_d *d);

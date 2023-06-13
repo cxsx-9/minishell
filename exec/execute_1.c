@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:30:08 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/13 23:31:47 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 01:41:56 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,30 @@ void	clear_pipe(t_fd *pipe, int extra, int freed)
 void	do_execute(t_d *d, t_token *cmd, int extra)
 {
 	int	i;
+	int	pid;
+	int	status;
 
 	i = 0;
+	pid = -1;
 	do_redirect(d, cmd);
 	while (cmd)
 	{
 		if (!cmd->stat->is_error && cmd->token[0] != NULL)
 		{
 			if (extra)
-				fork_exec(cmd, d, check_builtin(cmd->token), i);
+				pid = fork_exec(cmd, d, check_builtin(cmd->token), i);
 			else if (!extra && check_builtin(cmd->token) == 1)
 				do_builtin(cmd->token, d, 0);
 			else
-				fork_exec(cmd, d, check_builtin(cmd->token), -1);
+				pid = fork_exec(cmd, d, check_builtin(cmd->token), -1);
 		}
 		i++;
 		cmd = cmd->next;
 	}
+	waitpid(pid, &status, WUNTRACED);
+	d->exit_status = WEXITSTATUS(status);
+	while (--i)
+		waitpid(-1, 0, WUNTRACED);
 }
 
 void	main_execute(t_d *d)

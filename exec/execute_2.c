@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:18:19 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/13 23:28:23 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 01:42:14 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,9 @@ void	close_main_pipe(t_token *cmd, t_fd *p, int i)
 	}
 }
 
-void	fork_exec(t_token *cmd, t_d *d, int type, int i)
+int	fork_exec(t_token *cmd, t_d *d, int type, int i)
 {
 	int	pid;
-	int	status;
 
 	pid = fork();
 	if (pid == 0)
@@ -74,7 +73,6 @@ void	fork_exec(t_token *cmd, t_d *d, int type, int i)
 		if (i != -1)
 			clear_pipe(d->pipe, 1, 0);
 	}
-	waitpid(pid, &status, 0);
 	close_main_pipe(cmd, d->pipe, i);
-	d->exit_status = WEXITSTATUS(status);
+	return (pid);
 }

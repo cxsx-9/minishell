@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:10:04 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/10 22:21:43 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 01:52:10 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	ft_cd(char **args, t_d *d)
 	int	size;
 
 	size = args_count(args);
-	if (size == 1)
+	if (size == 1 || (size == 2 && !ft_strcmp(args[1], "~")
+			&& ft_strlen(args[1]) == 1))
 		chdir(ft_getenv(d->env, "HOME"));
 	else if (size >= 2)
 	{
