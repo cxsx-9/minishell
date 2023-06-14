@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 21:52:17 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/14 20:01:25 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 20:04:43 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s1, char const *set);
 char			**ft_split(char const *s, char c);
-char			*ft_itoa(long long int nbr);
+char			*ft_itoa(long int nbr);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void			ft_striteri(char *s, void (*f)(unsigned int, char *));
 void			ft_putchar_fd(char c, int fd);
