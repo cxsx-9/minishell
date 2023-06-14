@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:15:02 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/14 01:26:04 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:41:04 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,8 @@ typedef struct s_d
 }			t_d;
 
 // LEXER
-
 // lexer.c
 int				lexer(t_d *d);
-int				expand_var(char **new, char *s, int i, t_d *d);
 int				varlen(char *s, int i);
 int				check_special(char *str);
 int				is_all_wh(char *s);
@@ -135,11 +133,9 @@ void			join_cmd(t_d *d);
 // execute_1.c
 void			main_execute(t_d *d);
 void			clear_pipe(t_fd *pipe, int extra, int freed);
-void			close_pipe(t_fd *fd);
 // execute_2.c
 void			execute_from_path(char **token, t_d *d);
 int				fork_exec(t_token *cmd, t_d *d, int type, int i);
-// void			fork_exec(char **args, t_d *d, int type, t_fd *fd);
 // builtin_1.c
 void			ft_pwd(t_d *d);
 void			ft_echo(char **args, t_d *d);
@@ -182,7 +178,9 @@ void			lst_delmid(t_list *head, t_list *terget);
 int				skip_quote(char *s, int i);
 char			*ft_strjoin_premium(char *s1, char *s2, int option);
 enum e_token	check_type(char *c);
-void			show_2d(char **input);
+int				expand_var_normal(char **new, char *s, int i, t_d *d);
+int				expand_var_quote(char **new, char *s, int i, t_d *d);
+
 // util_2.c
 int				check_builtin(char **args);
 int				do_builtin(char **str, t_d *d, int do_fork);
@@ -195,9 +193,10 @@ void			error_print_format_2(char *s1, int option);
 void			error_print_format_3(char *s1, char *s2, int option);
 
 // show.c
-void			print_tkn(char *str);
+void			show_2d(char **input);
 void			show_cmd(t_token *cmd);
 void			show_red(t_token *cmd);
+void			print_tkn(char *str);
 
 // SRC/ENV
 // env.c

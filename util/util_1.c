@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 00:19:03 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 21:23:34 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:38:25 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,57 @@ enum e_token	check_type(char *c)
 		return (REIN);
 	else
 		return (CMD);
+}
+
+int	expand_var_normal(char **new, char *s, int i, t_d *d)
+{
+	char	*var_name;
+	char	*value;
+	int		len;
+
+	if (s[i] == '$')
+		i++;
+	len = varlen(s, i);
+	if (!len && (s[i] && s[i] != '\'' && s[i] != '\"'))
+	{
+		printf("WHY?? [%c]\n", s[i]);
+		*new = ft_strjoin_premium(*new, "$\0", 1);
+	}
+	else if (s[i] == '?')
+		*new = ft_strjoin_premium(*new, value = ft_itoa(d->exit_status), 3);
+	else
+	{
+		var_name = ft_substr(s, i, len);
+		value = ft_getenv(d->env, var_name);
+		if (!value)
+			value = "\0";
+		free(var_name);
+		*new = ft_strjoin_premium(*new, value, 1);
+	}
+	return (len + 1);
+}
+
+int	expand_var_quote(char **new, char *s, int i, t_d *d)
+{
+	char	*var_name;
+	char	*value;
+	int		len;
+
+	if (s[i] == '$')
+		i++;
+	len = varlen(s, i);
+	if (!len)
+		*new = ft_strjoin_premium(*new, "$\0", 1);
+	else if (s[i] == '?')
+		*new = ft_strjoin_premium(*new, value = ft_itoa(d->exit_status), 3);
+	else
+	{
+		var_name = ft_substr(s, i, len);
+		value = ft_getenv(d->env, var_name);
+		if (!value)
+			value = "\0";
+		free(var_name);
+		*new = ft_strjoin_premium(*new, value, 1);
+	}
+	return (len + 1);
 }

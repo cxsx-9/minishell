@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 22:33:07 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/14 00:19:31 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:28:03 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	fill_dquote(char **new, char *s, int i, t_d *d)
 	while (s[i] && s[i] != '\"')
 	{
 		if (s[i] == '$')
-			i += expand_var(new, s, i, d);
+			i += expand_var_quote(new, s, i, d);
 		else
 			i += fill_in_dq(new, s, i);
 	}
@@ -64,7 +64,7 @@ int	fill_string(char **new, char *s, int i, t_d *d)
 
 	skip = 0;
 	if (s[i] == '$')
-		skip += expand_var(new, s, i, d);
+		skip += expand_var_normal(new, s, i, d);
 	else
 		skip += fill_in_str(new, s, i);
 	return (skip);
