@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:10:04 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/14 01:52:10 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:56:45 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,12 @@ void	is_good_digit(char **args, t_d *d)
 			exit(255);
 		}
 		i++;
+	}
+	if (ft_atoi(args[1]) < -2147483648 || ft_atoi(args[1]) > 2147483647)
+	{
+		error_print_format_3(args[0], args[1], 2);
+		free_for_all(d);
+		exit(255);
 	}
 }
 

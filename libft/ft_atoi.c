@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 00:11:06 by csantivi          #+#    #+#             */
-/*   Updated: 2022/03/13 13:45:53 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:59:48 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+long long int	ft_atoi(const char *str)
 {
-	int	i;
-	int	neg;
-	int	num;
+	int				i;
+	int				neg;
+	long long int	num;
 
 	neg = 1;
 	i = 0;

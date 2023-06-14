@@ -6,13 +6,13 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:40:12 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/14 17:30:17 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:51:13 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count(long int n)
+static int	count(long long int n)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ static int	count(long int n)
 	return (i);
 }
 
-char	*ft_itoa(long int nbr)
+char	*ft_itoa(long long int nbr)
 {
 	int		c;
 	int		neg;
