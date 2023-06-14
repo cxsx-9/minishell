@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 16:20:12 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/13 23:24:53 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:23:52 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	error_print_format_2(char *s1, int option)
 
 void	error_print_format_3(char *s1, char *s2, int option)
 {
-	ft_putstr_fd("bash: ", 1);
+	ft_putstr_fd("bash: ", 2);
 	write(2, s1, ft_strlen(s1));
 	write(2, ": `", 2);
 	write(2, s2, ft_strlen(s2));

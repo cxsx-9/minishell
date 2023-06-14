@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:20:12 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/11 21:23:04 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:06:12 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	show_2d(char **input)
 		return ;
 	i = 0;
 	while (input[i])
-		printf("%s,", input[i++]);
+		dprintf(2, "%s,", input[i++]);
 }
 
 void	print_tkn(char *str)

@@ -6,7 +6,7 @@
 /*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:29:51 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/13 23:20:55 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:29:45 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	**fill_cmd(t_token *runner, int size)
 			runner = runner->next->next;
 		if (!runner)
 			break ;
+		if (is_meta(runner->str[0]) == 2)
+			continue ;
 		token[i] = ft_strdup(runner->str);
 		runner = runner->next;
 		i++;
