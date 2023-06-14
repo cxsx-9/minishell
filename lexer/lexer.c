@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 22:47:14 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/14 00:24:57 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:03:13 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,13 @@ int	expand_var(char **new, char *s, int i, t_d *d)
 	char	*value;
 	int		len;
 
-	if (s[i] == '\'' || s[i] == '\"' || s[i] == '$')
+	if (s[i] == '$')
 		i++;
 	len = varlen(s, i);
 	if (!len)
-		value = "$\0";
+		*new = ft_strjoin_premium(*new, "$\0", 1);
 	else if (s[i] == '?')
-	{
-		value = ft_itoa(d->exit_status);
-		*new = ft_strjoin_premium(*new, value, 3);
-	}
+		*new = ft_strjoin_premium(*new, value = ft_itoa(d->exit_status), 3);
 	else
 	{
 		var_name = ft_substr(s, i, len);
