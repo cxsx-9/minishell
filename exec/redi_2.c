@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redi_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csantivi <csantivi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: csantivi <csantivi@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:56:00 by csantivi          #+#    #+#             */
-/*   Updated: 2023/06/13 23:52:37 by csantivi         ###   ########.fr       */
+/*   Updated: 2023/06/14 13:31:28 by csantivi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ void	set_default_inout(t_fd *p, t_token *cmd)
 void	setup_inout(t_d *d, t_token *cmd)
 {
 	int	i;
-	int	id;
 
-	id = 0;
 	set_default_inout(d->pipe, cmd);
 	while (cmd)
 	{
@@ -89,7 +87,6 @@ void	setup_inout(t_d *d, t_token *cmd)
 				cmd->stat->outfile = cmd->red_fd[i / 2];
 			i += 2;
 		}
-		id++;
 		cmd = cmd->next;
 	}
 }
